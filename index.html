@@ -12,6 +12,10 @@
     html {
       font-size: 19px; /* Base enlarged font size for better readability */
       transition: font-size 0.2s ease;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
     }
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -19,6 +23,16 @@
       color: #1e293b;
       font-size: 1.1rem;
       line-height: 1.6;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    input, textarea {
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+      user-select: text;
     }
     h1, h2, h3, .font-heading {
       font-family: 'Fredoka', cursive, sans-serif;
@@ -1731,13 +1745,56 @@
     }
 
     /* ==========================================================================
-       8. UNIVERSAL COPY-TO-CLIPBOARD UTILITIES (ÉVITE LES COPIER-COLLER MANUELS)
+       8. UNIVERSAL COPY-TO-CLIPBOARD UTILITIES & SITE-WIDE ANTI-COPY-PASTE
        ========================================================================== */
+    window.allowProgrammaticCopy = false;
+
+    // Site-wide protection listeners against manual copying/pasting/cutting/right-click
+    document.addEventListener('copy', (e) => {
+      if (!window.allowProgrammaticCopy) {
+        e.preventDefault();
+      }
+    });
+
+    document.addEventListener('cut', (e) => {
+      if (!window.allowProgrammaticCopy) {
+        e.preventDefault();
+      }
+    });
+
+    document.addEventListener('paste', (e) => {
+      e.preventDefault();
+    });
+
+    document.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+    });
+
+    document.addEventListener('selectstart', (e) => {
+      if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+        return true;
+      }
+      e.preventDefault();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      const isCtrlOrCmd = e.ctrlKey || e.metaKey;
+      const key = e.key ? e.key.toLowerCase() : '';
+      if (isCtrlOrCmd && ['c', 'v', 'x', 'u', 'a', 's'].includes(key)) {
+        if (key === 'a' && e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+          return true; // Allow select all in text input
+        }
+        e.preventDefault();
+      }
+    });
+
     function copyTextToClipboard(text, btnElement, successMsg = "✓ Copié !") {
       const originalHTML = btnElement ? btnElement.innerHTML : "";
+      window.allowProgrammaticCopy = true;
 
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(() => {
+          window.allowProgrammaticCopy = false;
           showCopyFeedback(btnElement, originalHTML, successMsg);
         }).catch(() => {
           fallbackCopyText(text, btnElement, originalHTML, successMsg);
@@ -1748,6 +1805,7 @@
     }
 
     function fallbackCopyText(text, btnElement, originalHTML, successMsg) {
+      window.allowProgrammaticCopy = true;
       const textarea = document.createElement('textarea');
       textarea.value = text;
       textarea.style.position = 'fixed';
@@ -1761,6 +1819,7 @@
         alert("Action restreinte par le navigateur.");
       }
       document.body.removeChild(textarea);
+      window.allowProgrammaticCopy = false;
     }
 
     function showCopyFeedback(btnElement, originalHTML, successMsg) {
