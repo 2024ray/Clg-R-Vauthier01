@@ -62,6 +62,19 @@
     .animate-pulse-ring {
       animation: pulse-ring 2s infinite ease-in-out;
     }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
     .timer-ring {
       transition: stroke-dashoffset 1s linear;
     }
@@ -125,7 +138,7 @@
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
     <!-- ==================== TAB 1 : COURS ==================== -->
-    <section id="id-section-cours" class="space-y-10">
+    <section id="id-section-cours" class="space-y-10 animate-fade-in">
       
       <!-- HERO BANNER / INTRO LÉO & PIXO -->
       <div id="id-hero-banner" class="gradient-header rounded-3xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden">
@@ -1122,10 +1135,17 @@
     function switchTab(tabName) {
       playAudioTone('click');
 
-      // Hide all sections
-      document.getElementById('id-section-cours').classList.add('hidden');
-      document.getElementById('id-section-entraînement').classList.add('hidden');
-      document.getElementById('id-section-évaluation').classList.add('hidden');
+      const secCours = document.getElementById('id-section-cours');
+      const secTrain = document.getElementById('id-section-entraînement');
+      const secEval = document.getElementById('id-section-évaluation');
+
+      // Hide all sections and remove fade-in class
+      [secCours, secTrain, secEval].forEach(sec => {
+        if (sec) {
+          sec.classList.add('hidden');
+          sec.classList.remove('animate-fade-in');
+        }
+      });
 
       // Reset active styles on buttons
       const btnCours = document.getElementById('id-tab-cours');
@@ -1144,11 +1164,12 @@
         btnEval.className = "flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 text-slate-400 opacity-80 cursor-not-allowed";
       }
 
-      // Show selected section
+      // Show selected section with progressive fade-in animation
+      let targetSec = null;
       if (tabName === 'cours') {
-        document.getElementById('id-section-cours').classList.remove('hidden');
+        targetSec = secCours;
       } else if (tabName === 'entraînement') {
-        document.getElementById('id-section-entraînement').classList.remove('hidden');
+        targetSec = secTrain;
         initTrainingSection();
       } else if (tabName === 'évaluation') {
         if (!isEvalUnlocked) {
@@ -1156,7 +1177,13 @@
           switchTab('entraînement');
           return;
         }
-        document.getElementById('id-section-évaluation').classList.remove('hidden');
+        targetSec = secEval;
+      }
+
+      if (targetSec) {
+        targetSec.classList.remove('hidden');
+        void targetSec.offsetWidth; // Force browser reflow to restart animation reliably
+        targetSec.classList.add('animate-fade-in');
       }
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
