@@ -377,6 +377,29 @@
         </div>
       </div>
 
+      <!-- FICHE SYNTHÈSE DU COURS (PRÊTE À COPIER) -->
+      <div class="bg-gradient-to-br from-slate-900 to-indigo-950 text-white rounded-3xl p-6 sm:p-8 space-y-6 shadow-xl border border-indigo-900">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-indigo-800/80 pb-4">
+          <div class="space-y-1">
+            <span class="text-xs font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/80 px-3 py-1 rounded-full border border-cyan-800/50">
+              📝 Fiche Synthèse du Chapitre
+            </span>
+            <h4 class="text-xl sm:text-2xl font-bold text-white">Résumé de Cours Prêt à Copier</h4>
+          </div>
+          <button onclick="copyCourseSummaryToClipboard(this)" class="px-5 py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-extrabold rounded-2xl shadow-md transition flex items-center gap-2 text-xs sm:text-sm cursor-pointer">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            <span>Copier la Synthèse Complète</span>
+          </button>
+        </div>
+
+        <div class="bg-slate-950/80 p-5 rounded-2xl border border-indigo-900/60 font-mono text-xs text-slate-300 leading-relaxed space-y-3 max-h-64 overflow-y-auto custom-scrollbar">
+          <p class="font-bold text-cyan-300">📌 SYNTHÈSE TECHNOLOGIE CYCLE 4 - ÉVOLUTION DES OBJETS TECHNIQUES :</p>
+          <p>1️⃣ <strong>Veille Technologique :</strong> Observation permanente pour collecter (brevets, articles), trier et analyser les innovations et besoins.</p>
+          <p>2️⃣ <strong>Fonction vs Principe Technique :</strong> Une même fonction d'usage (ex: Éclairer) évolue grâce à de nouveaux principes techniques (combustion ➔ incandescence ➔ LED éco-énergétique).</p>
+          <p>3️⃣ <strong>Éco-conception & ACV :</strong> L'Analyse du Cycle de Vie évalue l'impact écologique « du berceau au tombeau ». L'Indice de Réparabilité (sur 10) favorise la réutilisation et les pièces détachées.</p>
+        </div>
+      </div>
+
       <!-- TRANSITION BUTTON TO ENTRAÎNEMENT -->
       <div class="bg-gradient-to-r from-indigo-600 to-cyan-600 rounded-3xl p-8 text-white text-center shadow-2xl space-y-4">
         <h3 class="text-2xl sm:text-3xl font-extrabold">Tu as bien assimilé la leçon ?</h3>
@@ -1390,10 +1413,14 @@
         let feedbackHTML = "";
         if (isAnswered) {
           const isCorrect = selectedOpt === q.answer;
+          const cleanExplanation = (q.explanation || "").replace(/'/g, "\\'").replace(/"/g, '&quot;');
           feedbackHTML = `
-            <div class="mt-4 p-4 rounded-2xl border ${isCorrect ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-amber-50 border-amber-200 text-amber-900'} space-y-1 text-xs sm:text-sm">
-              <div class="font-bold flex items-center gap-2">
+            <div class="mt-4 p-4 rounded-2xl border ${isCorrect ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-amber-50 border-amber-200 text-amber-900'} space-y-2 text-xs sm:text-sm">
+              <div class="font-bold flex items-center justify-between gap-2">
                 <span>${isCorrect ? '✅ Bravo !' : '💡 Explication Pédagogique :'}</span>
+                <button onclick="copyTextToClipboard('${cleanExplanation}', this, '✓ Explication copiée !')" class="px-2.5 py-1 bg-white hover:bg-slate-100 text-slate-700 rounded-lg border border-slate-200 shadow-sm transition text-xs font-semibold flex items-center gap-1 cursor-pointer">
+                  <span>📋 Copier l'explication</span>
+                </button>
               </div>
               <p>${q.explanation}</p>
             </div>
@@ -1686,26 +1713,96 @@
         </div>
 
         <div class="flex flex-wrap justify-center gap-4 pt-6 border-t border-slate-200">
-          <button onclick="downloadResultsTxt(${noteOn20}, '${masteryLevel}', ${rawScore})" class="px-6 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold rounded-2xl shadow-lg transition inline-flex items-center gap-2 text-sm">
+          <button onclick="copyEvalResultsToClipboard(${noteOn20}, '${masteryLevel}', ${rawScore}, this)" class="px-6 py-3.5 bg-cyan-600 hover:bg-cyan-700 text-white font-extrabold rounded-2xl shadow-lg transition inline-flex items-center gap-2 text-sm cursor-pointer">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            <span>Copier le Bilan dans le presse-papier</span>
+          </button>
+
+          <button onclick="downloadResultsTxt(${noteOn20}, '${masteryLevel}', ${rawScore})" class="px-6 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold rounded-2xl shadow-lg transition inline-flex items-center gap-2 text-sm cursor-pointer">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
             <span>Télécharger le bilan (.txt)</span>
           </button>
 
-          <button onclick="switchTab('cours')" class="px-6 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-2xl transition text-sm">
+          <button onclick="switchTab('cours')" class="px-6 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-2xl transition text-sm cursor-pointer">
             Retour au Cours
           </button>
         </div>
       `;
     }
 
-    function downloadResultsTxt(note, mastery, rawScore) {
+    /* ==========================================================================
+       8. UNIVERSAL COPY-TO-CLIPBOARD UTILITIES (ÉVITE LES COPIER-COLLER MANUELS)
+       ========================================================================== */
+    function copyTextToClipboard(text, btnElement, successMsg = "✓ Copié !") {
+      const originalHTML = btnElement ? btnElement.innerHTML : "";
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showCopyFeedback(btnElement, originalHTML, successMsg);
+        }).catch(() => {
+          fallbackCopyText(text, btnElement, originalHTML, successMsg);
+        });
+      } else {
+        fallbackCopyText(text, btnElement, originalHTML, successMsg);
+      }
+    }
+
+    function fallbackCopyText(text, btnElement, originalHTML, successMsg) {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        showCopyFeedback(btnElement, originalHTML, successMsg);
+      } catch (e) {
+        alert("Action restreinte par le navigateur.");
+      }
+      document.body.removeChild(textarea);
+    }
+
+    function showCopyFeedback(btnElement, originalHTML, successMsg) {
+      playAudioTone('click');
+      if (btnElement) {
+        btnElement.innerHTML = `<span>${successMsg}</span>`;
+        btnElement.classList.add('bg-emerald-600', 'text-white');
+        setTimeout(() => {
+          btnElement.innerHTML = originalHTML;
+          btnElement.classList.remove('bg-emerald-600', 'text-white');
+        }, 2200);
+      }
+    }
+
+    function copyCourseSummaryToClipboard(btnElement) {
+      const summaryText = `=======================================================\n` +
+        `   FICHE DE SYNTHÈSE DE TECHNOLOGIE - CYCLE 4 (5ème)\n` +
+        `   Chapitre : Liens entre usages et évolutions technologiques\n` +
+        `=======================================================\n\n` +
+        `1. LA VEILLE SCIENTIFIQUE ET TECHNOLOGIQUE :\n` +
+        `- Démarche d'observation continue pour anticiper les besoins et innovations.\n` +
+        `- 3 Piliers : Collecter (brevets/articles), Trier (filtrer la désinformation), Analyser (comprendre les tendances).\n` +
+        `- Brevet : Titre légal de propriété industrielle qui protège une invention pendant 20 ans.\n\n` +
+        `2. MÊME FONCTION, PRINCIPES TECHNIQUES DIFFÉRENTS :\n` +
+        `- Fonction d'Usage : Répond à un besoin fondamental (ex: Communiquer, Éclairer).\n` +
+        `- Le Principe Technique évolue avec la science.\n` +
+        `- Exemple Éclairage : Combustion (Bougie) ➔ Incandescence (Ampoule à filament, 95% de pertes) ➔ LED (Électroluminescence, 85% d'économie d'énergie).\n\n` +
+        `3. ÉCO-CONCEPTION ET RÉPARABILITÉ :\n` +
+        `- ACV (Analyse du Cycle de Vie) : Évalue l'impact environnemental « du berceau au tombeau ».\n` +
+        `- Indice de Réparabilité (note sur 10) : Indique la facilité de démontage et la disponibilité des pièces détachées.\n`;
+      
+      copyTextToClipboard(summaryText, btnElement, "✓ Synthèse copiée !");
+    }
+
+    function generateEvalTextReport(note, mastery, rawScore) {
       const today = new Date().toLocaleDateString('fr-FR');
       let textContent = `=======================================================\n`;
       textContent += `   BILAN D'ÉVALUATION DE TECHNOLOGIE - CYCLE 4 (5ème)\n`;
       textContent += `=======================================================\n\n`;
-      textContent += `Nom : ${evalStudentInfo.nom.toUpperCase()}\n`;
-      textContent += `Prénom : ${evalStudentInfo.prenom}\n`;
-      textContent += `Classe : ${evalStudentInfo.classe}\n`;
+      textContent += `Nom : ${evalStudentInfo.nom ? evalStudentInfo.nom.toUpperCase() : 'ÉLÈVE'}\n`;
+      textContent += `Prénom : ${evalStudentInfo.prenom || ''}\n`;
+      textContent += `Classe : ${evalStudentInfo.classe || ''}\n`;
       textContent += `Date : ${today}\n`;
       textContent += `Chapitre : Liens entre usages et évolutions technologiques\n\n`;
       textContent += `-------------------------------------------------------\n`;
@@ -1721,8 +1818,8 @@
       evalQuestions.forEach((q, idx) => {
         const userAns = evalAnswers[idx];
         const isRight = userAns === q.answer;
-        const userText = userAns !== null ? q.options[userAns] : "Non répondu";
-        const correctText = q.options[q.answer];
+        const userText = userAns !== null && q.options && q.options[userAns] ? q.options[userAns] : "Non répondu";
+        const correctText = q.options && q.options[q.answer] ? q.options[q.answer] : "Réponse valide";
 
         textContent += `Q${idx + 1}: ${q.question}\n`;
         textContent += `   Statut : ${isRight ? 'CORRECT [OK]' : 'INCORRECT [ERR]'}\n`;
@@ -1735,6 +1832,17 @@
 
       textContent += `=======================================================\n`;
       textContent += `Document généré automatiquement le ${today}.\n`;
+      return textContent;
+    }
+
+    function copyEvalResultsToClipboard(note, mastery, rawScore, btnElement) {
+      const text = generateEvalTextReport(note, mastery, rawScore);
+      copyTextToClipboard(text, btnElement, "✓ Bilan copié !");
+    }
+
+    function downloadResultsTxt(note, mastery, rawScore) {
+      const textContent = generateEvalTextReport(note, mastery, rawScore);
+      const today = new Date().toLocaleDateString('fr-FR');
 
       const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
       const url = URL.createObjectURL(blob);
