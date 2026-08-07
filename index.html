@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Techno-Cycle 4 : Évolution des Objets & Veille Technologique</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+    html {
+      font-size: 19px; /* Base enlarged font size for better readability */
+      transition: font-size 0.2s ease;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+    h1, h2, h3, .font-heading {
+      font-family: 'Fredoka', cursive, sans-serif;
+    }
+    .gradient-header {
+      background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 50%, #6366f1 100%);
+    }
+    .card-shadow {
+      box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+    .animate-pulse-ring {
+      animation: pulse-ring 2s infinite ease-in-out;
+    }
+    .timer-ring {
+      transition: stroke-dashoffset 1s linear;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col antialiased">
+
+  <!-- TOP HEADER / NAV -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo & Title -->
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold uppercase tracking-wider bg-cyan-100 text-cyan-800 px-2 py-0.5 rounded-full">Technologie - Cycle 4</span>
+              <span class="text-xs font-semibold text-slate-500">Niveau 5<sup>ème</sup></span>
+            </div>
+            <h1 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Usages & Évolutions des Objets</h1>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs & Font Size Control -->
+        <div class="flex items-center gap-2 flex-wrap justify-end">
+          <!-- Font Size Adjuster -->
+          <div class="hidden sm:flex items-center gap-1 bg-slate-100 p-1.5 rounded-2xl border border-slate-200 text-xs font-bold text-slate-600">
+            <span class="px-1 text-slate-500 hidden md:inline">🔤 Taille :</span>
+            <button onclick="setFontSize('16px', this)" title="Taille Normale" class="font-size-btn px-2.5 py-1.5 rounded-xl hover:bg-white text-slate-700 font-medium transition">A</button>
+            <button onclick="setFontSize('20px', this)" title="Grande Taille (Par défaut)" class="font-size-btn px-2.5 py-1.5 rounded-xl bg-indigo-600 text-white shadow-sm font-bold transition">A+</button>
+            <button onclick="setFontSize('24px', this)" title="Très Grande Taille" class="font-size-btn px-2.5 py-1.5 rounded-xl hover:bg-white text-slate-700 font-extrabold transition text-sm">A++</button>
+          </div>
+
+          <nav id="id-main-nav" class="flex items-center gap-1 sm:gap-2 bg-slate-100 p-1.5 rounded-2xl border border-slate-200">
+            <button id="id-tab-cours" onclick="switchTab('cours')" class="flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-white text-indigo-600 shadow-sm">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+              <span>📘 Cours</span>
+            </button>
+
+            <button id="id-tab-entraînement" onclick="switchTab('entraînement')" class="flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 text-slate-600 hover:text-slate-900 hover:bg-slate-200/60">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span>🎯 Entraînement</span>
+            </button>
+
+            <button id="id-tab-évaluation" onclick="handleEvalTabClick()" class="flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 text-slate-400 opacity-80 hover:opacity-100">
+              <svg id="id-eval-lock-icon" class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+              <span>📝 Évaluation</span>
+              <span id="id-eval-badge" class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 uppercase tracking-wider">Bloqué</span>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- ==================== TAB 1 : COURS ==================== -->
+    <section id="id-section-cours" class="space-y-10">
+      
+      <!-- HERO BANNER / INTRO LÉO & PIXO -->
+      <div id="id-hero-banner" class="gradient-header rounded-3xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden">
+        <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-7 space-y-4">
+            <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase">
+              <span>🚀 Exploration Pédagogique</span>
+            </div>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
+              Pourquoi et comment les objets évoluent-ils ?
+            </h2>
+            <p class="text-cyan-50 text-base sm:text-lg leading-relaxed">
+              Rejoins <strong>Léo</strong> et son compagnon robotique <strong>Pixo</strong> pour comprendre les secrets de l'évolution technologique, de la veille scientifique jusqu'à l'éco-conception !
+            </p>
+            <div class="flex flex-wrap gap-3 pt-2">
+              <a href="#id-video-section" class="inline-flex items-center gap-2 bg-white text-indigo-600 font-bold px-5 py-3 rounded-2xl shadow-lg hover:bg-cyan-50 transition">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/></svg>
+                Regarder la vidéo
+              </a>
+              <a href="#id-cours-part1" class="inline-flex items-center gap-2 bg-indigo-700/50 hover:bg-indigo-700 text-white font-bold px-5 py-3 rounded-2xl border border-white/20 transition">
+                Commencer le chapitre ↓
+              </a>
+            </div>
+          </div>
+
+          <!-- Pixo Avatar Display -->
+          <div class="lg:col-span-5 flex justify-center">
+            <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-6 text-center shadow-2xl max-w-sm w-full space-y-4 animate-pulse-ring">
+              <div class="w-24 h-24 mx-auto bg-white rounded-full flex items-center justify-center text-4xl shadow-md">
+                🤖
+              </div>
+              <div>
+                <h3 class="text-xl font-bold">Pixo le Robot Guide</h3>
+                <p class="text-xs text-cyan-100 mt-1">« Salut ! Je t'accompagne tout au long du cours. Clique sur les éléments interactifs pour découvrir les informations ! »</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION VIDEO PÉDAGOGIQUE -->
+      <div id="id-video-section" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 card-shadow space-y-6">
+        <div class="flex items-center gap-4 border-b border-slate-100 pb-4">
+          <div class="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-xl">
+            🎬
+          </div>
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Animation Interactive</span>
+            <h3 class="text-2xl font-bold text-slate-900">Léo & Pixo : L'Évolution des Télephones & La Veille</h3>
+          </div>
+        </div>
+
+        <div class="relative rounded-2xl overflow-hidden bg-black shadow-inner max-w-4xl mx-auto border border-slate-300">
+          <video controls class="w-full h-auto max-h-[480px] object-contain rounded-2xl">
+            <source src="video/leo_pixo_animation_sous_titres.mp4" type="video/mp4" />
+            <source src="leo-animation.mp4" type="video/mp4" />
+            Votre navigateur ne prend pas en charge la lecture de vidéos HTML5.
+          </video>
+        </div>
+        <p class="text-sm text-slate-500 text-center italic">
+          💡 Regarde attentivement cette vidéo de dialogue pour bien retenir la démarche de veille et la différence entre fonction d'usage et principe technique !
+        </p>
+      </div>
+
+      <!-- PARTIE 1 : LA VEILLE SCIENTIFIQUE ET TECHNOLOGIQUE -->
+      <div id="id-cours-part1" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 card-shadow space-y-8">
+        <div class="flex items-center gap-4 border-b border-slate-100 pb-4">
+          <div class="w-12 h-12 rounded-2xl bg-cyan-100 text-cyan-600 flex items-center justify-center font-bold text-xl">
+            1️⃣
+          </div>
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-cyan-600">Notion Clef</span>
+            <h3 class="text-2xl font-bold text-slate-900">La Veille Scientifique et Technologique</h3>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-4 text-slate-600 text-base leading-relaxed">
+            <p>
+              Pour créer ou faire évoluer un objet, les ingénieurs ne devinent pas l'avenir : ils réalisent une <strong>veille scientifique et technologique</strong>. C'est une démarche d'observation permanente pour s'informer sur les nouvelles découvertes et les besoins des utilisateurs.
+            </p>
+            <p>
+              La veille repose sur <strong>3 piliers essentiels</strong> :
+            </p>
+            
+            <!-- Process 3 steps -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+              <div class="bg-cyan-50 border border-cyan-200 rounded-2xl p-4 text-center space-y-2">
+                <div class="w-10 h-10 bg-cyan-600 text-white rounded-xl flex items-center justify-center font-extrabold mx-auto text-lg shadow-sm">1</div>
+                <h4 class="font-bold text-slate-900">Collecter</h4>
+                <p class="text-xs text-slate-600">Rassembler des données (brevets, articles, statistiques, avis).</p>
+              </div>
+
+              <div class="bg-indigo-50 border border-indigo-200 rounded-2xl p-4 text-center space-y-2">
+                <div class="w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center font-extrabold mx-auto text-lg shadow-sm">2</div>
+                <h4 class="font-bold text-slate-900">Trier</h4>
+                <p class="text-xs text-slate-600">Filtrer les fausses informations et sélectionner ce qui est utile.</p>
+              </div>
+
+              <div class="bg-purple-50 border border-purple-200 rounded-2xl p-4 text-center space-y-2">
+                <div class="w-10 h-10 bg-purple-600 text-white rounded-xl flex items-center justify-center font-extrabold mx-auto text-lg shadow-sm">3</div>
+                <h4 class="font-bold text-slate-900">Analyser</h4>
+                <p class="text-xs text-slate-600">Comprendre les nouvelles tendances et anticiper les futurs besoins.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Card -->
+          <div class="bg-slate-900 text-white rounded-2xl p-6 space-y-4 flex flex-col justify-between">
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-cyan-400 font-bold text-sm">
+                <span>🔍 À quoi servent les Brevets ?</span>
+              </div>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Un <strong>brevet</strong> est un titre de propriété délivré pour protéger une invention. Consulter les bases de données de brevets permet de savoir ce que préparent les concurrents !
+              </p>
+            </div>
+            <div class="p-3 bg-slate-800 rounded-xl border border-slate-700 text-xs text-cyan-200">
+              📌 <strong>Exemple :</strong> Apple, Samsung ou Tesla déposent des milliers de brevets chaque année pour protéger leurs nouveaux écrans ou leurs batteries.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PARTIE 2 : COMPARAISON DES PRINCIPES TECHNIQUES ET ÉVOLUTION DES USAGES -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 card-shadow space-y-8">
+        <div class="flex items-center gap-4 border-b border-slate-100 pb-4">
+          <div class="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-xl">
+            2️⃣
+          </div>
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Analyse Technique</span>
+            <h3 class="text-2xl font-bold text-slate-900">Même Fonction, Principes Techniques Différents</h3>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <p class="text-slate-600 text-base leading-relaxed">
+            Un objet répond toujours à une <strong>Fonction d'Usage</strong> (ex: <i>Communiquer à distance</i> ou <i>Éclairer une pièce</i>). Au fil du temps, pour répondre à la même fonction, le <strong>Principe Technique</strong> change pour devenir plus performant, plus pratique ou plus écologique.
+          </p>
+
+          <!-- Interactive Timeline Explorer : LE TÉLÉPHONE -->
+          <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h4 class="text-xl font-bold text-slate-900">📱 Fil rouge : L'évolution de la téléphonie</h4>
+                <p class="text-xs text-slate-500">Clique sur chaque époque pour explorer le changement de principe technique !</p>
+              </div>
+              <span class="text-xs font-bold bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full">Fonction : Communiquer</span>
+            </div>
+
+            <!-- Timeline Tabs -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <button onclick="showPhoneEra(1)" id="id-phone-btn-1" class="p-4 rounded-xl border-2 border-indigo-600 bg-white shadow-md text-left transition space-y-1">
+                <span class="text-xs font-extrabold text-indigo-600 uppercase">Années 2000</span>
+                <h5 class="font-bold text-slate-900 text-sm">Téléphone à Clapet</h5>
+                <p class="text-xs text-slate-500">Touches physiques & SMS</p>
+              </button>
+
+              <button onclick="showPhoneEra(2)" id="id-phone-btn-2" class="p-4 rounded-xl border-2 border-slate-200 bg-white hover:border-indigo-300 text-left transition space-y-1">
+                <span class="text-xs font-extrabold text-slate-400 uppercase">Années 2010</span>
+                <h5 class="font-bold text-slate-900 text-sm">Smartphone Tactile</h5>
+                <p class="text-xs text-slate-500">Internet & Applications</p>
+              </button>
+
+              <button onclick="showPhoneEra(3)" id="id-phone-btn-3" class="p-4 rounded-xl border-2 border-slate-200 bg-white hover:border-indigo-300 text-left transition space-y-1">
+                <span class="text-xs font-extrabold text-slate-400 uppercase">Aujourd'hui (2025+)</span>
+                <h5 class="font-bold text-slate-900 text-sm">Smartphone Connecté & IA</h5>
+                <p class="text-xs text-slate-500">5G, IA intégrée, Domotique</p>
+              </button>
+            </div>
+
+            <!-- Display Dynamic Box -->
+            <div id="id-phone-details" class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+              <!-- Content injected dynamically via JS -->
+            </div>
+          </div>
+
+          <!-- COMPARATIVE TABLE : L'ÉCLAIRAGE -->
+          <div class="space-y-4">
+            <h4 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+              💡 Autre exemple : L'Évolution de l'Éclairage
+            </h4>
+            <div class="overflow-x-auto rounded-2xl border border-slate-200">
+              <table class="w-full text-left text-sm text-slate-600">
+                <thead class="bg-slate-100 text-slate-900 font-bold uppercase text-xs">
+                  <tr>
+                    <th class="p-4">Objet</th>
+                    <th class="p-4">Principe Technique</th>
+                    <th class="p-4">Rendement / Avantage</th>
+                    <th class="p-4">Inconvénient / Impact</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 bg-white">
+                  <tr>
+                    <td class="p-4 font-bold text-slate-900 flex items-center gap-2">🕯️ Bougie / Lampe à huile</td>
+                    <td class="p-4">Combustion de matière (cire, huile)</td>
+                    <td class="p-4 text-xs">Autonome, sans électricité</td>
+                    <td class="p-4 text-xs text-red-600">Éclairage très faible, risque d'incendie</td>
+                  </tr>
+                  <tr>
+                    <td class="p-4 font-bold text-slate-900 flex items-center gap-2">💡 Ampoule à filament</td>
+                    <td class="p-4">Incandescence d'un filament de tungstène</td>
+                    <td class="p-4 text-xs">Lumière instantanée et chaude</td>
+                    <td class="p-4 text-xs text-amber-600">95% de l'énergie perdue en chaleur !</td>
+                  </tr>
+                  <tr>
+                    <td class="p-4 font-bold text-slate-900 flex items-center gap-2">🌱 Ampoule LED moderne</td>
+                    <td class="p-4">Électroluminescence (semi-conducteur)</td>
+                    <td class="p-4 text-xs text-emerald-600">Consomme 85% d'énergie en moins, durée de vie très longue</td>
+                    <td class="p-4 text-xs">Fabrication complexe à base de composants électroniques</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PARTIE 3 : ÉCO-CONCEPTION ET INDICE DE RÉPARABILITÉ -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 card-shadow space-y-8">
+        <div class="flex items-center gap-4 border-b border-slate-100 pb-4">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-xl">
+            3️⃣
+          </div>
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-600">Exigences Écologiques</span>
+            <h3 class="text-2xl font-bold text-slate-900">Éco-conception & Recyclabilité</h3>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-emerald-50 rounded-2xl p-6 border border-emerald-200 space-y-3">
+            <div class="flex items-center gap-2 text-emerald-800 font-bold text-lg">
+              <span>♻️ L'Analyse du Cycle de Vie (ACV)</span>
+            </div>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              L'<strong>ACV</strong> évalue l'impact écologique d'un produit « du berceau au tombeau » :
+            </p>
+            <ul class="text-xs text-slate-700 space-y-1.5 list-disc list-inside">
+              <li>Extraction des matières premières</li>
+              <li>Fabrication en usine</li>
+              <li>Transport et distribution</li>
+              <li>Utilisation au quotidien</li>
+              <li>Fin de vie : Recyclage ou réutilisation</li>
+            </ul>
+          </div>
+
+          <div class="bg-amber-50 rounded-2xl p-6 border border-amber-200 space-y-3">
+            <div class="flex items-center gap-2 text-amber-900 font-bold text-lg">
+              <span>🔧 L'Indice de Réparabilité</span>
+            </div>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              En France, les appareils électroniques (smartphones, tondeuses, lave-linges) affichent une note obligatoire sur 10.
+            </p>
+            <div class="flex items-center gap-2 pt-2">
+              <span class="px-3 py-1 bg-emerald-600 text-white text-xs font-extrabold rounded-lg">8.5 / 10 (Facile à réparer)</span>
+              <span class="px-3 py-1 bg-red-600 text-white text-xs font-extrabold rounded-lg">3.1 / 10 (Difficile)</span>
+            </div>
+            <p class="text-[11px] text-slate-500 italic">Plus la note est élevée, plus il est facile de trouver des pièces détachées et de réparer l'appareil !</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRANSITION BUTTON TO ENTRAÎNEMENT -->
+      <div class="bg-gradient-to-r from-indigo-600 to-cyan-600 rounded-3xl p-8 text-white text-center shadow-2xl space-y-4">
+        <h3 class="text-2xl sm:text-3xl font-extrabold">Tu as bien assimilé la leçon ?</h3>
+        <p class="text-cyan-100 max-w-xl mx-auto text-sm sm:text-base">
+          Teste tes connaissances dans l'onglet <strong>Entraînement</strong>. Tu dois obtenir au moins <strong>75% de bonnes réponses (15/20)</strong> pour débloquer l'Évaluation finale !
+        </p>
+        <button onclick="switchTab('entraînement')" class="inline-flex items-center gap-3 bg-white text-indigo-700 font-extrabold px-8 py-4 rounded-2xl shadow-xl hover:bg-cyan-50 transform hover:scale-105 transition text-base">
+          <span>Lancer l'Entraînement (20 questions)</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </button>
+      </div>
+
+    </section>
+
+    <!-- ==================== TAB 2 : ENTRAÎNEMENT ==================== -->
+    <section id="id-section-entraînement" class="hidden space-y-8">
+      
+      <!-- Training Header Banner -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 card-shadow flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="space-y-2">
+          <span class="text-xs font-bold uppercase tracking-wider text-cyan-600 bg-cyan-100 px-3 py-1 rounded-full">Quiz non noté de préparation</span>
+          <h2 class="text-3xl font-bold text-slate-900">Entraînement Interactif</h2>
+          <p class="text-xs sm:text-sm text-slate-500">20 questions variées. Obtiens 75% (15/20) pour débloquer l'Évaluation !</p>
+        </div>
+
+        <!-- Global Timer & Score counter -->
+        <div class="flex items-center gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+          <div class="text-center px-3 border-r border-slate-200">
+            <span class="text-xs text-slate-500 font-semibold block">Temps restant</span>
+            <span id="id-train-timer" class="text-2xl font-black text-indigo-600 font-mono">15:00</span>
+          </div>
+          <div class="text-center px-3">
+            <span class="text-xs text-slate-500 font-semibold block">Score actuel</span>
+            <span id="id-train-score-display" class="text-2xl font-black text-emerald-600">0 / 20</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Training Progress Bar -->
+      <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+        <div id="id-train-progress-bar" class="bg-gradient-to-r from-cyan-500 to-indigo-600 h-3 rounded-full transition-all duration-300" style="width: 0%;"></div>
+      </div>
+
+      <!-- Training Questions Container -->
+      <div id="id-train-questions-container" class="space-y-6">
+        <!-- Injected dynamically via JS -->
+      </div>
+
+      <!-- Training Final Validation Box -->
+      <div id="id-train-result-box" class="hidden bg-white rounded-3xl p-8 border border-slate-200 card-shadow text-center space-y-6">
+        <!-- Results injected via JS -->
+      </div>
+
+    </section>
+
+    <!-- ==================== TAB 3 : ÉVALUATION ==================== -->
+    <section id="id-section-évaluation" class="hidden space-y-8">
+      
+      <!-- EVALUATION PRE-FORM (IF NOT STARTED) -->
+      <div id="id-eval-form-card" class="max-w-2xl mx-auto bg-white rounded-3xl p-8 border border-slate-200 card-shadow space-y-6">
+        <div class="text-center space-y-2">
+          <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-3xl mx-auto font-bold">
+            📝
+          </div>
+          <h2 class="text-3xl font-extrabold text-slate-900">Évaluation Officielle sur 20</h2>
+          <p class="text-sm text-slate-500">Remplis obligatoirement tes informations ci-dessous avant de commencer le test.</p>
+        </div>
+
+        <form id="id-eval-student-form" onsubmit="startEvaluation(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nom de l'élève *</label>
+            <input type="text" id="id-input-nom" required placeholder="Ex: DUPONT" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-amber-500 focus:outline-none font-medium text-slate-800" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Prénom de l'élève *</label>
+            <input type="text" id="id-input-prenom" required placeholder="Ex: Thomas" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-amber-500 focus:outline-none font-medium text-slate-800" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Classe *</label>
+            <select id="id-select-classe" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-amber-500 focus:outline-none font-medium text-slate-800">
+              <option value="">-- Choisis ta classe --</option>
+              <option value="5ème A">5ème A</option>
+              <option value="5ème B">5ème B</option>
+              <option value="5ème C">5ème C</option>
+              <option value="5ème D">5ème D</option>
+              <option value="5ème E">5ème E</option>
+            </select>
+          </div>
+
+          <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-800 space-y-1">
+            <p class="font-bold">⚠️ RÈGLES DE L'ÉPREUVE :</p>
+            <ul class="list-disc list-inside space-y-0.5">
+              <li>40 questions inédites.</li>
+              <li>Chronomètre strict de <strong>45 secondes par question</strong>.</li>
+              <li>Aucune correction affichée pendant l'épreuve.</li>
+              <li>À la fin : Note finale sur 20, niveau de maîtrise et bilan téléchargeable (.txt).</li>
+            </ul>
+          </div>
+
+          <button type="submit" class="w-full py-4 bg-amber-500 hover:bg-amber-600 text-white font-extrabold rounded-xl shadow-lg transition text-lg flex items-center justify-center gap-2">
+            <span>Démarrer l'Évaluation</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- EVALUATION ACTIVE TEST DISPLAY -->
+      <div id="id-eval-test-container" class="hidden space-y-6 max-w-4xl mx-auto">
+        
+        <!-- Question Progress & Timer Bar -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200 card-shadow flex items-center justify-between gap-4">
+          <div>
+            <span id="id-eval-q-number" class="text-xs font-bold uppercase tracking-wider text-amber-600">Question 1 / 40</span>
+            <h3 id="id-eval-student-info-display" class="text-sm font-semibold text-slate-700">Élève : -</h3>
+          </div>
+
+          <!-- Per Question Strict 45s Circular / Numeric Timer -->
+          <div class="flex items-center gap-3 bg-amber-50 px-4 py-2 rounded-2xl border border-amber-200">
+            <svg class="w-6 h-6 text-amber-600 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <div class="text-right">
+              <span class="text-[10px] uppercase font-bold text-amber-700 block">Temps Question</span>
+              <span id="id-eval-question-timer" class="text-2xl font-black text-amber-900 font-mono">45s</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Evaluation Current Question Box -->
+        <div id="id-eval-question-card" class="bg-white rounded-3xl p-8 border border-slate-200 card-shadow space-y-6">
+          <!-- Question text & choices injected dynamically -->
+        </div>
+
+      </div>
+
+      <!-- EVALUATION FINAL RESULTS PAGE -->
+      <div id="id-eval-results-container" class="hidden max-w-4xl mx-auto bg-white rounded-3xl p-8 border border-slate-200 card-shadow space-y-8">
+        <!-- Results injected dynamically -->
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4">
+      <p>Technologie Cycle 4 - Collège - « Liens entre usages et évolutions technologiques des objets et systèmes techniques »</p>
+      <p class="mt-1">Application autonome - Veille Scientifique, Principes Techniques & Éco-conception.</p>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT ENGINE -->
+  <script>
+    /* ==========================================================================
+       1. GLOBAL STATE & DATA STRUCTURES
+       ========================================================================== */
+    
+    // Unlocking state
+    let isEvalUnlocked = false;
+
+    // Training Questions Data (20 questions)
+    const trainingQuestions = [
+      {
+        id: 1,
+        type: "qcm",
+        question: "Qu'est-ce que la veille technologique ?",
+        options: [
+          "Dormir pendant que les machines travaillent",
+          "Collecter, trier et analyser des informations pour anticiper les évolutions",
+          "Regarder des vidéos sur YouTube toute la journée",
+          "Fabriquer un objet le plus vite possible"
+        ],
+        answer: 1,
+        explanation: "La veille technologique est une démarche organisée pour s'informer en continu sur les innovations et les besoins."
+      },
+      {
+        id: 2,
+        type: "vf",
+        question: "Vrai ou Faux : La fonction d'usage de base d'un téléphone (communiquer à distance) a changé entre l'an 2000 et aujourd'hui.",
+        options: ["Vrai", "Faux"],
+        answer: 1,
+        explanation: "FAUX ! La fonction de base reste 'Communiquer à distance', mais ce sont les principes techniques et les fonctions secondaires qui ont évolué."
+      },
+      {
+        id: 3,
+        type: "qcm",
+        question: "Quel besoin a motivé le passage du téléphone à clapet au smartphone tactile ?",
+        options: [
+          "Naviguer sur Internet, prendre des photos et utiliser des applications sur un grand écran",
+          "Rendre le téléphone plus lourd",
+          "Augmenter le nombre de boutons physiques",
+          "Réduire le prix du téléphone"
+        ],
+        answer: 0,
+        explanation: "Les nouveaux usages (photos, Web, applis) ont nécessité de remplacer le clavier physique par un grand écran tactile."
+      },
+      {
+        id: 4,
+        type: "qcm",
+        question: "Parmi ces technologies d'éclairage, laquelle consomme le moins d'énergie pour une même quantité de lumière ?",
+        options: [
+          "La bougie",
+          "L'ampoule à incandescence à filament",
+          "L'ampoule LED",
+          "La lampe à pétrole"
+        ],
+        answer: 2,
+        explanation: "L'ampoule LED utilise l'électroluminescence et économise jusqu'à 85% d'énergie par rapport à l'incandescence !"
+      },
+      {
+        id: 5,
+        type: "qcm",
+        question: "À quoi sert un brevet d'invention ?",
+        options: [
+          "À donner une note d'écologie à un objet",
+          "À protéger juridiquement une invention pour empêcher sa copie non autorisée",
+          "À réduire la facture d'électricité",
+          "À rendre un objet plus lourd"
+        ],
+        answer: 1,
+        explanation: "Le brevet protège la propriété intellectuelle de l'inventeur pendant une durée limitée (souvent 20 ans)."
+      },
+      {
+        id: 6,
+        type: "vf",
+        question: "Vrai ou Faux : L'Indice de Réparabilité permet de savoir si un appareil électronique est facile à réparer.",
+        options: ["Vrai", "Faux"],
+        answer: 0,
+        explanation: "VRAI ! Cet indice (sur 10) informe le consommateur sur la facilité de démontage et la disponibilité des pièces détachées."
+      },
+      {
+        id: 7,
+        type: "qcm",
+        question: "Que signifie 'ACV' dans le domaine de l'éco-conception ?",
+        options: [
+          "Analyse du Cycle de Vie",
+          "Appareil Connecté Vert",
+          "Association des Consommateurs Vélo",
+          "Achat de Composants Neufs"
+        ],
+        answer: 0,
+        explanation: "ACV = Analyse du Cycle de Vie. Elle calcule les impacts environnementaux 'du berceau au tombeau'."
+      },
+      {
+        id: 8,
+        type: "qcm",
+        question: "Deux objets qui répondent à la même fonction d'usage (ex: se déplacer) utilisent-ils toujours le même principe technique ?",
+        options: [
+          "Oui, obligatoirement",
+          "Non, ils peuvent utiliser des principes très différents (ex: moteur thermique vs vélo mécanique)",
+          "Seulement s'ils sont de la même couleur",
+          "Seulement s'ils sont électriques"
+        ],
+        answer: 1,
+        explanation: "Une même fonction d'usage peut être réalisée par divers principes techniques (moteur à essence, muscle humain, moteur électrique, etc.)."
+      },
+      {
+        id: 9,
+        type: "qcm",
+        question: "Quelle est la 1ère étape de la démarche de veille technologique ?",
+        options: [
+          "Jeter tous les anciens téléphones",
+          "Collecter des données et informations",
+          "Déposer un brevet sans chercher",
+          "Vendre un objet aux clients"
+        ],
+        answer: 1,
+        explanation: "La 1ère étape est la collecte d'informations provenant de diverses sources (articles, brevets, avis clients)."
+      },
+      {
+        id: 10,
+        type: "vf",
+        question: "Vrai ou Faux : Un objet éco-conçu prend en compte l'environnement uniquement lors de son recyclage final.",
+        options: ["Vrai", "Faux"],
+        answer: 1,
+        explanation: "FAUX ! L'éco-conception prend en compte l'impact écologique dès la phase de conception et à TOUTES les étapes de la vie de l'objet."
+      },
+      {
+        id: 11,
+        type: "qcm",
+        question: "Pourquoi remplace-t-on de plus en plus les plastiques issus du pétrole par des bio-matériaux ?",
+        options: [
+          "Parce qu'ils sont plus polluants",
+          "Pour réduire la dépendance au pétrole et faciliter la dégradabilité/recyclabilité",
+          "Parce qu'ils coûtent 100 fois plus cher",
+          "Pour rendre les objets invisibles"
+        ],
+        answer: 1,
+        explanation: "Les bio-matériaux (issus du maïs, du bois, du lin) réduisent l'empreinte carbone et améliorent la durabilité."
+      },
+      {
+        id: 12,
+        type: "qcm",
+        question: "Parmi ces éléments, lequel est une source de veille scientifique très fiable ?",
+        options: [
+          "Une rumeur sur TikTok",
+          "Un article publié dans une revue scientifique reconnue",
+          "La vidéo d'un influenceur payé pour une pub",
+          "Un commentaire anonyme sur un forum"
+        ],
+        answer: 1,
+        explanation: "Les articles de revues scientifiques à comité de lecture apportent des preuves vérifiées et fiables."
+      },
+      {
+        id: 13,
+        type: "vf",
+        question: "Vrai ou Faux : Trier l'information récoltée lors d'une veille permet d'éliminer les fausses nouvelles (fake news).",
+        options: ["Vrai", "Faux"],
+        answer: 0,
+        explanation: "VRAI ! Le tri permet de ne conserver que les données fiables, pertinentes et récentes."
+      },
+      {
+        id: 14,
+        type: "qcm",
+        question: "Quel composant a permis de miniaturiser les ordinateurs et téléphones au cours du XXe siècle ?",
+        options: [
+          "La lampe à huile",
+          "Le transistor et le microprocesseur à semi-conducteur",
+          "Le moteur à vapeur",
+          "Le câble en cuivre géant"
+        ],
+        answer: 1,
+        explanation: "L'invention des transistors puis des puces microélectroniques a permis de réduire la taille des circuits tout en augmentant la puissance !"
+      },
+      {
+        id: 15,
+        type: "qcm",
+        question: "Que vise la sobriété énergétique pour un objet technique ?",
+        options: [
+          "Consommer le moins d'énergie possible pour réaliser son service",
+          "Utiliser 10 piles en même temps",
+          "Consommer toute l'énergie en 5 secondes",
+          "Ne plus jamais fonctionner"
+        ],
+        answer: 0,
+        explanation: "La sobriété énergétique consiste à optimiser les performances pour réduire le gaspillage d'énergie."
+      },
+      {
+        id: 16,
+        type: "vf",
+        question: "Vrai ou Faux : Les réseaux 5G et l'Intelligence Artificielle sont des évolutions technologiques récentes modifiant les usages des smartphones.",
+        options: ["Vrai", "Faux"],
+        answer: 0,
+        explanation: "VRAI ! L'IA intégrée et les réseaux haut débit créent de nouveaux usages comme la traduction en temps réel et la domotique."
+      },
+      {
+        id: 17,
+        type: "qcm",
+        question: "Si une ampoule incandescente transforme 95% de son énergie en chaleur, quelle est sa fonction non désirée ?",
+        options: [
+          "Éclairer la pièce",
+          "Chauffer inutilement l'air environnant (perte thermique)",
+          "Émettre du son",
+          "Recharger la batterie"
+        ],
+        answer: 1,
+        explanation: "L'effet Joule (dégagement de chaleur) est une perte d'énergie non désirée pour une lampe dont le rôle est d'éclairer."
+      },
+      {
+        id: 18,
+        type: "qcm",
+        question: "Laquelle de ces démarches prolonge la durée de vie d'un appareil ?",
+        options: [
+          "Le jeter dès la première panne",
+          "Remplacer la batterie usagée grâce à sa réparabilité",
+          "Le laisser sous la pluie",
+          "Mettre du sable dans les prises"
+        ],
+        answer: 1,
+        explanation: "Pouvoir réparer et changer une batterie usagée évite le remplacement prématuré de tout l'objet !"
+      },
+      {
+        id: 19,
+        type: "vf",
+        question: "Vrai ou Faux : Un cahier des charges décrit l'ensemble des besoins et contraintes auxquels l'objet doit répondre.",
+        options: ["Vrai", "Faux"],
+        answer: 0,
+        explanation: "VRAI ! Le cahier des charges fixe les règles du jeu (fonctions, budget, normes de sécurité, contraintes écologiques)."
+      },
+      {
+        id: 20,
+        type: "qcm",
+        question: "En résumé, qu'est-ce qui fait évoluer principalement les objets techniques ?",
+        options: [
+          "Le hasard uniquement",
+          "L'évolution des besoins, des usages, des progrès scientifiques et des contraintes écologiques/économiques",
+          "La volonté de rendre les objets plus compliqués",
+          "La couleur de peinture préférée du designer"
+        ],
+        answer: 1,
+        explanation: "C'est la combinaison des besoins des utilisateurs, des découvertes scientifiques et du respect de la planète qui guide les évolutions !"
+      }
+    ];
+
+    // Evaluation Questions Data (40 unique questions)
+    const evalQuestions = [
+      { id: 1, question: "La veille technologique consiste principalement à :", options: ["Dormir en surveillant les usines", "Observer, collecter et analyser l'information pour anticiper les évolutions", "Copier exactement le produit du voisin", "Acheter le produit le plus cher"], answer: 1 },
+      { id: 2, question: "Vrai ou Faux : Une étude de marché permet d'analyser les attentes et besoins des futurs utilisateurs.", options: ["Vrai", "Faux"], answer: 0 },
+      { id: 3, question: "Quelle est la fonction d'usage principale d'une montre connectée ?", options: ["Cuire un œuf à la coque", "Mesurer le temps et apporter des fonctions numériques d'assistance", "Servir de marteau", "Remplacer un vélo"], answer: 1 },
+      { id: 4, question: "Parmi ces principes d'éclairage, lequel est historiquement le plus ancien ?", options: ["L'ampoule LED", "La bougie / lampe à combustion", "Le tube fluorescent", "L'ampoule halogène"], answer: 1 },
+      { id: 5, question: "Vrai ou Faux : L'ampoule LED fonctionne grâce à un filament chauffé à très haute température.", options: ["Vrai", "Faux"], answer: 1 },
+      { id: 6, question: "Qu'est-ce qu'un 'principe technique' ?", options: ["Le prix de vente en magasin", "La solution scientifique/physique retenue pour assurer une fonction", "Le nom de la marque de l'objet", "Le pays où l'objet est vendu"], answer: 1 },
+      { id: 7, question: "Deux objets répondant à la fonction 'Nettoyer le sol' (ex: balai mécanique vs aspirateur robot) :", options: ["Utilisent obligatoirement le même principe", "Répondent au même besoin mais avec des principes techniques différents", "Ne peuvent pas exister en même temps", "Ont été inventés la même année"], answer: 1 },
+      { id: 8, question: "Vrai ou Faux : Le téléphone à cadran rotatif et le smartphone répondent au besoin fondamental de communiquer à distance.", options: ["Vrai", "Faux"], answer: 0 },
+      { id: 9, question: "Sur quelle note maximale est évalué l'Indice de Réparabilité en France ?", options: ["Sur 5", "Sur 10", "Sur 20", "Sur 100"], answer: 1 },
+      { id: 10, question: "Qu'appelle-t-on l'obsolescence programmée ?", options: ["Un programme d'entraînement sportif", "La réduction volontaire de la durée de vie d'un produit pour pousser à son remplacement", "Le fait de réparer un objet gratuitement", "Le téléchargement d'une mise à jour de sécurité"], answer: 1 },
+      { id: 11, question: "Vrai ou Faux : L'Analyse du Cycle de Vie (ACV) évalue l'impact écologique 'du berceau au tombeau'.", options: ["Vrai", "Faux"], answer: 0 },
+      { id: 12, question: "Quel est l'avantage majeur des plastiques biosourcés ?", options: ["Ils ne fondent jamais", "Ils sont fabriqués à partir de matières renouvelables (ex: maïs) au lieu du pétrole", "Ils sont entièrement invisibles", "Ils coûtent zéro euro"], answer: 1 },
+      { id: 13, question: "Pourquoi les constructeurs automobiles développent-ils des véhicules électriques ?", options: ["Pour faire plus de bruit", "Pour répondre aux normes écologiques et réduire les émissions directes de CO2", "Parce que le pétrole est inépuisable", "Pour supprimer les roues"], answer: 1 },
+      { id: 14, question: "Vrai ou Faux : Un brevet protège une invention indéfiniment pendant 500 ans.", options: ["Vrai", "Faux"], answer: 1 },
+      { id: 15, question: "Lors d'une veille, quelle est la source d'information la plus fiable scientifiquement ?", options: ["Les revues scientifiques à comité de lecture et bases de brevets", "Les vidéos d'humour sur TikTok", "Un SMS reçu d'un inconnu", "Un prospectus publicitaire"], answer: 0 },
+      { id: 16, question: "Quel est le principal avantage de la LED face à l'ampoule incandescente ?", options: ["Elle chauffe la pièce très fort", "Elle consomme beaucoup moins d'électricité et dure plus longtemps", "Elle casse facilement", "Elle nécessite du pétrole pour brûler"], answer: 1 },
+      { id: 17, question: "Vrai ou Faux : Un objet connecté envoie ou reçoit des données via un réseau sans fil (Wi-Fi, Bluetooth, 4G/5G).", options: ["Vrai", "Faux"], answer: 0 },
+      { id: 18, question: "Dans le domaine du déplacement individuel, quel usage a émergé récemment en ville ?", options: ["La trottinette électrique en libre-service", "Le voyage en calèche à cheval", "La marche à reculons", "Le patin à roulettes en fer"], answer: 0 },
+      { id: 19, question: "Que signifie la 'recyclabilité' d'un matériau ?", options: ["Sa capacité à être retraité pour fabriquer de nouveaux objets", "Son prix de vente d'occasion", "Sa couleur après séchage", "Le poids de son emballage"], answer: 0 },
+      { id: 20, question: "Vrai ou Faux : Miniaturiser des puces électroniques permet d'intégrer plus de fonctionnalités dans un espace réduit.", options: ["Vrai", "Faux"], answer: 0 },
+      { id: 21, question: "Quelle est la fonction d'usage commune à un poêle à bois et un radiateur électrique ?", options: ["Éclairer la cuisine", "Chauffer une pièce", "Refroidir les aliments", "Produire de la musique"], answer: 1 },
+      { id: 22, question: "Quel critère caractérise un objet éco-conçu ?", options: ["Facilement réparable, économe en énergie et fabriqué avec des matériaux recyclables", "Jetable après une utilisation", "Emballé dans 10 couches de plastique non recyclable", "Fabriqué à l'autre bout du monde sans normes"], answer: 0 },
+      { id: 23, question: "Vrai ou Faux : Les normes environnementales imposées par la loi forcent les entreprises à faire évoluer leurs technologies.", options: ["Vrai", "Faux"], answer: 0 },
+      { id: 24, question: "Quelle étape de la veille technologique consiste à vérifier si une info est vraie ou fausse ?", options: ["La collecte massive", "Le tri et la vérification de pertinence/fiabilité", "La destruction des ordinateurs", "L'impression sur papier"], answer: 1 },
+      { id: 25, question: "Dans le domaine de l'impression, quelle technologie est plus récente que la presse mécanique de Gutenberg ?", options: ["L'imprimante 3D et l'imprimante laser", "La gravure sur pierre", "Le pinceau en poils de sanglier", "Le manuscrit à la main"], answer: 0 },
+      { id: 26, question: "Vrai ou Faux : La baisse du coût des capteurs favorise la démocratisation des objets intelligents.", options: ["Vrai", "Faux"], answer: 0 },
+      { id: 27, question: "Quel est l'un des impacts de la numérisation sur nos usages ?", options: ["La réduction de l'utilisation du papier au profit des documents numériques", "L'interdiction des ordinateurs", "L'obligation d'écrire à la plume", "L'extinction d'Internet"], answer: 0 },
+      { id: 28, question: "Quelle technologie d'écran offre un contraste élevé avec des pixels auto-émissifs ?", options: ["Écran OLED", "Écran à tube cathodique géant", "Feuille de papier journal", "Ardoise en pierre"], answer: 0 },
+      { id: 29, question: "Vrai ou Faux : Supprimer le clavier physique sur un téléphone pour le remplacer par un écran tactile est une évolution du principe technique.", options: ["Vrai", "Faux"], answer: 0 },
+      { id: 30, question: "Quel est l'intérêt de la batterie Lithium-ion par rapport aux anciennes batteries ?", options: ["Elle stocke plus d'énergie dans un volume et un poids réduits", "Elle doit être branchée 24h/24 au secteur", "Elle fonctionne au charbon", "Elle ne se recharge jamais"], answer: 0 },
+      { id: 31, question: "Quelle action permet d'éviter de jeter un objet en panne ?", options: ["Consulter le guide de réparation et changer la pièce défectueuse", "Le jeter à la poubelle ordinaire", "Le casser avec un marteau", "Racheter le dernier modèle immédiatement"], answer: 0 },
+      { id: 32, question: "Vrai ou Faux : La veille technologique ne sert qu'aux professeurs de technologie.", options: ["Vrai", "Faux"], answer: 1 },
+      { id: 33, question: "Quel facteur économique incite à choisir un nouveau principe technique ?", options: ["Réduire les coûts de fabrication et la consommation d'énergie", "Augmenter le gaspillage de matière", "Rendre le produit hors de prix pour tous", "Payer des amendes d'invalidation"], answer: 0 },
+      { id: 34, question: "Que mesure l'étiquette énergie (A à G) sur un appareil électroménager ?", options: ["Sa consommation électrique et son efficacité énergétique", "La vitesse de rotation de ses roues", "Le bruit des touches", "La durée de sa garantie"], answer: 0 },
+      { id: 35, question: "Vrai ou Faux : L'ergonomie désigne la capacité d'un objet à être facilement et confortablement utilisé par l'être humain.", options: ["Vrai", "Faux"], answer: 0 },
+      { id: 36, question: "Quel réseau sans fil à courte portée permet le paiement sans contact (NFC) ou le couplage d'un casque audio ?", options: ["Bluetooth / NFC", "Câble sous-marin", "Ondes radio FM longue portée", "Satellite géostationnaire"], answer: 0 },
+      { id: 37, question: "Laquelle de ces démarches réduit directement l'empreinte carbone d'un objet ?", options: ["Préférer des matériaux locaux et recyclés avec un transport court", "Utiliser du pétrole extraite à 15 000 km", "Emballer chaque vis dans du plastique individuel", "Changer de téléphone tous les 2 mois"], answer: 0 },
+      { id: 38, question: "Vrai ou Faux : Les objets techniques évoluent en permanence car les besoins humains et les connaissances scientifiques changent.", options: ["Vrai", "Faux"], answer: 0 },
+      { id: 39, question: "Quel est le rôle du cahier des charges dans un projet de technologie ?", options: ["Fixer les besoins, fonctions et contraintes à respecter", "Raconter une histoire pour enfants", "Donner la recette du gâteau au chocolat", "Lister les prénoms des élèves"], answer: 0 },
+      { id: 40, question: "En conclusion, un objet technique moderne performant doit :", options: ["Répondre à un besoin, être ergonomique, économe et éco-conçu", "Consommer le plus d'énergie possible", "Être impossible à réparer", "N'avoir aucune utilité"], answer: 0 }
+    ];
+
+    // Phone Era Interactive Data
+    const phoneEras = {
+      1: {
+        title: "Années 2000 : Le Téléphone à Clapet",
+        usage: "Appels vocaux et SMS uniquement",
+        principle: "Touches mécaniques physiques, petit écran LCD non tactile, réseau GSM 2G",
+        eco: "Batterie amovible facile à changer, mais fonctionnalités très limitées",
+        icon: "📟"
+      },
+      2: {
+        title: "Années 2010 : Le Smartphone Tactile",
+        usage: "Navigation sur Internet, photos/vidéos, applications, réseaux sociaux",
+        principle: "Écran capacitif multipoint, processeur ARM mobile, réseaux 3G/4G, magasins d'applis",
+        eco: "Batteries souvent collées (indice de réparabilité faible à l'époque), hausse de l'empreinte numérique",
+        icon: "📱"
+      },
+      3: {
+        title: "Aujourd'hui : Smartphone Connecté & IA (5G)",
+        usage: "Assistant IA personnel, domotique, paiement sans contact, réalité augmentée",
+        principle: "Écran OLED pliable, processeur gravé en 3nm avec NPU (intelligence artificielle), réseau 5G/6G, capteurs biométriques",
+        eco: "Obligation légale d'affichage de l'indice de réparabilité, matériaux recyclés (aluminium, cobalt éthique)",
+        icon: "🤖"
+      }
+    };
+
+    // User State Variables
+    let trainTimerInterval = null;
+    let trainSecondsLeft = 15 * 60; // 15 mins
+    let trainAnswers = {}; // { qId: selectedOptionIndex }
+
+    let evalStudentInfo = { nom: "", prenom: "", classe: "" };
+    let evalCurrentIndex = 0;
+    let evalTimerInterval = null;
+    let evalSecondsLeft = 45;
+    let evalAnswers = Array(40).fill(null); // stores index or null
+
+    /* ==========================================================================
+       2. AUDIO SYNTHESIZER (WEB AUDIO API)
+       ========================================================================== */
+    function playAudioTone(type) {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        if (type === 'click') {
+          osc.frequency.setValueAtTime(400, ctx.currentTime);
+          gain.gain.setValueAtTime(0.05, ctx.currentTime);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.05);
+        } else if (type === 'correct') {
+          osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
+          osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1); // E5
+          gain.gain.setValueAtTime(0.1, ctx.currentTime);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.25);
+        } else if (type === 'error') {
+          osc.frequency.setValueAtTime(220, ctx.currentTime);
+          osc.frequency.setValueAtTime(180, ctx.currentTime + 0.1);
+          gain.gain.setValueAtTime(0.1, ctx.currentTime);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.25);
+        }
+      } catch (e) {
+        // Audio fallback silent
+      }
+    }
+
+    /* ==========================================================================
+       3. NAVIGATION & TAB SWITCHING LOGIC
+       ========================================================================== */
+    function switchTab(tabName) {
+      playAudioTone('click');
+
+      // Hide all sections
+      document.getElementById('id-section-cours').classList.add('hidden');
+      document.getElementById('id-section-entraînement').classList.add('hidden');
+      document.getElementById('id-section-évaluation').classList.add('hidden');
+
+      // Reset active styles on buttons
+      const btnCours = document.getElementById('id-tab-cours');
+      const btnTrain = document.getElementById('id-tab-entraînement');
+      const btnEval = document.getElementById('id-tab-évaluation');
+
+      const inactiveStyle = "text-slate-600 hover:text-slate-900 hover:bg-slate-200/60";
+      const activeStyle = "bg-white text-indigo-600 shadow-sm font-bold";
+
+      btnCours.className = `flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 ${tabName === 'cours' ? activeStyle : inactiveStyle}`;
+      btnTrain.className = `flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 ${tabName === 'entraînement' ? activeStyle : inactiveStyle}`;
+      
+      if (isEvalUnlocked) {
+        btnEval.className = `flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 ${tabName === 'évaluation' ? 'bg-amber-500 text-white shadow-md font-bold' : 'text-amber-700 bg-amber-100 hover:bg-amber-200'}`;
+      } else {
+        btnEval.className = "flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 text-slate-400 opacity-80 cursor-not-allowed";
+      }
+
+      // Show selected section
+      if (tabName === 'cours') {
+        document.getElementById('id-section-cours').classList.remove('hidden');
+      } else if (tabName === 'entraînement') {
+        document.getElementById('id-section-entraînement').classList.remove('hidden');
+        initTrainingSection();
+      } else if (tabName === 'évaluation') {
+        if (!isEvalUnlocked) {
+          alert("🔒 L'onglet Évaluation est bloqué ! Tu dois d'abord réussir l'Entraînement avec un score d'au moins 75% (15/20).");
+          switchTab('entraînement');
+          return;
+        }
+        document.getElementById('id-section-évaluation').classList.remove('hidden');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function handleEvalTabClick() {
+      if (!isEvalUnlocked) {
+        alert("🔒 L'accès à l'Évaluation nécessite d'obtenir au moins 75% de bonnes réponses à l'Entraînement (15/20) !");
+        switchTab('entraînement');
+      } else {
+        switchTab('évaluation');
+      }
+    }
+
+    function unlockEvaluationTab() {
+      isEvalUnlocked = true;
+      const lockIcon = document.getElementById('id-eval-lock-icon');
+      const badge = document.getElementById('id-eval-badge');
+
+      if (lockIcon) {
+        lockIcon.outerHTML = `<svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"/></svg>`;
+      }
+      if (badge) {
+        badge.textContent = "Débloqué !";
+        badge.className = "text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 uppercase tracking-wider animate-pulse";
+      }
+    }
+
+    /* ==========================================================================
+       4. LESSON INTERACTIVE MODULE (PHONE ERA EXPLORER)
+       ========================================================================== */
+    function showPhoneEra(eraId) {
+      playAudioTone('click');
+      const data = phoneEras[eraId];
+      if (!data) return;
+
+      // Update button highlights
+      for (let i = 1; i <= 3; i++) {
+        const btn = document.getElementById(`id-phone-btn-${i}`);
+        if (i === eraId) {
+          btn.className = "p-4 rounded-xl border-2 border-indigo-600 bg-white shadow-md text-left transition space-y-1";
+        } else {
+          btn.className = "p-4 rounded-xl border-2 border-slate-200 bg-white hover:border-indigo-300 text-left transition space-y-1 opacity-75";
+        }
+      }
+
+      const container = document.getElementById('id-phone-details');
+      container.innerHTML = `
+        <div class="flex items-start gap-4">
+          <div class="text-4xl p-3 bg-indigo-50 rounded-2xl border border-indigo-100">
+            ${data.icon}
+          </div>
+          <div class="space-y-2 flex-1">
+            <h5 class="text-lg font-bold text-slate-900">${data.title}</h5>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs">
+              <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                <span class="font-extrabold text-indigo-600 block mb-1">🎯 Nouveaux Usages</span>
+                <p class="text-slate-600">${data.usage}</p>
+              </div>
+              <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                <span class="font-extrabold text-cyan-600 block mb-1">⚙️ Principe Technique</span>
+                <p class="text-slate-600">${data.principle}</p>
+              </div>
+              <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                <span class="font-extrabold text-emerald-600 block mb-1">🌱 Impact / Éco-conception</span>
+                <p class="text-slate-600">${data.eco}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    /* ==========================================================================
+       5. TRAINING QUIZ ENGINE (20 QUESTIONS)
+       ========================================================================== */
+    function initTrainingSection() {
+      // Start global timer if not started
+      if (!trainTimerInterval) {
+        trainTimerInterval = setInterval(() => {
+          trainSecondsLeft--;
+          if (trainSecondsLeft <= 0) {
+            clearInterval(trainTimerInterval);
+            trainSecondsLeft = 0;
+            alert("⏰ Le temps imparti pour l'entraînement est écoulé !");
+          }
+          const mins = Math.floor(trainSecondsLeft / 60);
+          const secs = trainSecondsLeft % 60;
+          document.getElementById('id-train-timer').textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }, 1000);
+      }
+
+      renderTrainingQuestions();
+    }
+
+    function renderTrainingQuestions() {
+      const container = document.getElementById('id-train-questions-container');
+      container.innerHTML = "";
+
+      trainingQuestions.forEach((q, idx) => {
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 card-shadow space-y-4";
+        card.id = `id-train-card-${q.id}`;
+
+        const isAnswered = trainAnswers.hasOwnProperty(q.id);
+        const selectedOpt = trainAnswers[q.id];
+
+        let choicesHTML = "";
+        q.options.forEach((opt, optIdx) => {
+          let btnStyle = "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-800";
+          let badge = "";
+
+          if (isAnswered) {
+            if (optIdx === q.answer) {
+              btnStyle = "bg-emerald-100 border-emerald-400 text-emerald-900 font-bold";
+              badge = "✔ Bonne réponse";
+            } else if (optIdx === selectedOpt && selectedOpt !== q.answer) {
+              btnStyle = "bg-red-100 border-red-400 text-red-900 font-bold";
+              badge = "✘ Faux";
+            } else {
+              btnStyle = "bg-slate-50 border-slate-200 text-slate-400 opacity-60 cursor-not-allowed";
+            }
+          }
+
+          choicesHTML += `
+            <button 
+              ${isAnswered ? 'disabled' : ''} 
+              onclick="submitTrainingAnswer(${q.id}, ${optIdx})" 
+              class="w-full text-left p-4 rounded-2xl border-2 transition flex items-center justify-between text-sm sm:text-base font-medium ${btnStyle}"
+            >
+              <span>${opt}</span>
+              ${badge ? `<span class="text-xs px-2 py-1 rounded-lg ${optIdx === q.answer ? 'bg-emerald-600 text-white' : 'bg-red-600 text-white'}">${badge}</span>` : ''}
+            </button>
+          `;
+        });
+
+        let feedbackHTML = "";
+        if (isAnswered) {
+          const isCorrect = selectedOpt === q.answer;
+          feedbackHTML = `
+            <div class="mt-4 p-4 rounded-2xl border ${isCorrect ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-amber-50 border-amber-200 text-amber-900'} space-y-1 text-xs sm:text-sm">
+              <div class="font-bold flex items-center gap-2">
+                <span>${isCorrect ? '✅ Bravo !' : '💡 Explication Pédagogique :'}</span>
+              </div>
+              <p>${q.explanation}</p>
+            </div>
+          `;
+        }
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-3">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">Question ${idx + 1} / 20</span>
+            <span class="text-xs text-slate-400 font-semibold">${q.type === 'vf' ? 'Vrai / Faux' : 'QCM'}</span>
+          </div>
+          <h4 class="text-base sm:text-lg font-bold text-slate-900">${q.question}</h4>
+          <div class="space-y-2.5 pt-2">
+            ${choicesHTML}
+          </div>
+          ${feedbackHTML}
+        `;
+
+        container.appendChild(card);
+      });
+
+      updateTrainingSummary();
+    }
+
+    function submitTrainingAnswer(qId, selectedIdx) {
+      trainAnswers[qId] = selectedIdx;
+      
+      const q = trainingQuestions.find(item => item.id === qId);
+      if (q && selectedIdx === q.answer) {
+        playAudioTone('correct');
+      } else {
+        playAudioTone('error');
+      }
+
+      renderTrainingQuestions();
+    }
+
+    function updateTrainingSummary() {
+      const answeredCount = Object.keys(trainAnswers).length;
+      let score = 0;
+
+      trainingQuestions.forEach(q => {
+        if (trainAnswers[q.id] === q.answer) {
+          score++;
+        }
+      });
+
+      document.getElementById('id-train-score-display').textContent = `${score} / 20`;
+      
+      const percent = (answeredCount / 20) * 100;
+      document.getElementById('id-train-progress-bar').style.width = `${percent}%`;
+
+      // Check if all 20 questions are answered
+      if (answeredCount === 20) {
+        showTrainingFinalResult(score);
+      }
+    }
+
+    function showTrainingFinalResult(score) {
+      const resultBox = document.getElementById('id-train-result-box');
+      resultBox.classList.remove('hidden');
+
+      const isPass = score >= 15; // 75% = 15/20
+
+      if (isPass) {
+        unlockEvaluationTab();
+        playAudioTone('correct');
+        resultBox.innerHTML = `
+          <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-4xl mx-auto font-bold animate-bounce">
+            🎉
+          </div>
+          <h3 class="text-3xl font-extrabold text-slate-900">Félicitations !</h3>
+          <p class="text-lg font-bold text-emerald-600">Score : ${score} / 20 (${(score/20)*100}%)</p>
+          <p class="text-sm text-slate-600 max-w-md mx-auto">
+            Tu as obtenu plus de 75% de bonnes réponses ! <strong>L'onglet Évaluation est maintenant débloqué</strong>. Tu peux tenter l'épreuve officielle notée sur 20.
+          </p>
+          <div class="pt-2">
+            <button onclick="switchTab('évaluation')" class="px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-2xl shadow-xl transition transform hover:scale-105 inline-flex items-center gap-2">
+              <span>Passer à l'Évaluation Notée 📝</span>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+            </button>
+          </div>
+        `;
+      } else {
+        playAudioTone('error');
+        resultBox.innerHTML = `
+          <div class="w-20 h-20 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-4xl mx-auto font-bold">
+            💡
+          </div>
+          <h3 class="text-2xl font-extrabold text-slate-900">Score Insuffisant</h3>
+          <p class="text-lg font-bold text-amber-600">Score : ${score} / 20 (${(score/20)*100}%) - Minimum requis : 15/20 (75%)</p>
+          <p class="text-sm text-slate-600 max-w-md mx-auto">
+            L'évaluation officielle est encore verrouillée. Relis attentivement la leçon puis réessaye le quiz d'entraînement !
+          </p>
+          <div class="flex flex-wrap justify-center gap-4 pt-2">
+            <button onclick="switchTab('cours')" class="px-6 py-3 bg-indigo-600 text-white font-bold rounded-xl shadow-md hover:bg-indigo-700 transition">
+              📘 Réviser le Cours
+            </button>
+            <button onclick="resetTrainingQuiz()" class="px-6 py-3 bg-slate-200 text-slate-800 font-bold rounded-xl hover:bg-slate-300 transition">
+              🔄 Recommencer l'Entraînement
+            </button>
+          </div>
+        `;
+      }
+
+      resultBox.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function resetTrainingQuiz() {
+      trainAnswers = {};
+      document.getElementById('id-train-result-box').classList.add('hidden');
+      renderTrainingQuestions();
+    }
+
+    /* ==========================================================================
+       6. EVALUATION ENGINE (40 QUESTIONS - STRICT 45s TIMER)
+       ========================================================================== */
+    function startEvaluation(e) {
+      e.preventDefault();
+      
+      const nom = document.getElementById('id-input-nom').value.trim();
+      const prenom = document.getElementById('id-input-prenom').value.trim();
+      const classe = document.getElementById('id-select-classe').value;
+
+      if (!nom || !prenom || !classe) {
+        alert("Merci de remplir tous les champs obligatoires.");
+        return;
+      }
+
+      evalStudentInfo = { nom, prenom, classe };
+
+      // Hide form & show active test UI
+      document.getElementById('id-eval-form-card').classList.add('hidden');
+      document.getElementById('id-eval-test-container').classList.remove('hidden');
+
+      document.getElementById('id-eval-student-info-display').textContent = `Élève : ${prenom} ${nom.toUpperCase()} (${classe})`;
+
+      evalCurrentIndex = 0;
+      evalAnswers = Array(40).fill(null);
+
+      showEvalQuestion(0);
+    }
+
+    function showEvalQuestion(index) {
+      if (index >= 40) {
+        finishEvaluation();
+        return;
+      }
+
+      evalCurrentIndex = index;
+      const q = evalQuestions[index];
+
+      document.getElementById('id-eval-q-number').textContent = `Question ${index + 1} / 40`;
+
+      // Reset question timer
+      clearInterval(evalTimerInterval);
+      evalSecondsLeft = 45;
+      document.getElementById('id-eval-question-timer').textContent = "45s";
+
+      evalTimerInterval = setInterval(() => {
+        evalSecondsLeft--;
+        document.getElementById('id-eval-question-timer').textContent = `${evalSecondsLeft}s`;
+
+        if (evalSecondsLeft <= 0) {
+          clearInterval(evalTimerInterval);
+          // Auto move next question (unanswered)
+          recordEvalAnswerAndNext(null);
+        }
+      }, 1000);
+
+      // Render Question Content
+      const card = document.getElementById('id-eval-question-card');
+      
+      let optionsHTML = "";
+      q.options.forEach((opt, optIdx) => {
+        optionsHTML += `
+          <button 
+            onclick="recordEvalAnswerAndNext(${optIdx})" 
+            class="w-full text-left p-4 rounded-2xl border-2 border-slate-200 hover:border-amber-500 hover:bg-amber-50 transition font-medium text-slate-800 text-sm sm:text-base flex items-center justify-between"
+          >
+            <span>${opt}</span>
+            <span class="text-xs text-amber-600 font-bold border border-amber-300 px-2 py-0.5 rounded-md bg-white">Valider →</span>
+          </button>
+        `;
+      });
+
+      card.innerHTML = `
+        <h4 class="text-lg sm:text-xl font-bold text-slate-900 leading-snug">${q.question}</h4>
+        <div class="space-y-3 pt-2">
+          ${optionsHTML}
+        </div>
+      `;
+    }
+
+    function recordEvalAnswerAndNext(selectedOptIdx) {
+      playAudioTone('click');
+      clearInterval(evalTimerInterval);
+
+      evalAnswers[evalCurrentIndex] = selectedOptIdx;
+
+      // Advance to next question
+      showEvalQuestion(evalCurrentIndex + 1);
+    }
+
+    function finishEvaluation() {
+      clearInterval(evalTimerInterval);
+
+      // Hide test container, show results
+      document.getElementById('id-eval-test-container').classList.add('hidden');
+      const resultsContainer = document.getElementById('id-eval-results-container');
+      resultsContainer.classList.remove('hidden');
+
+      // Calculate score out of 40 and scale to /20
+      let rawScore = 0;
+      let mistakes = [];
+
+      evalQuestions.forEach((q, idx) => {
+        const userAns = evalAnswers[idx];
+        if (userAns === q.answer) {
+          rawScore++;
+        } else {
+          mistakes.push({
+            qNumber: idx + 1,
+            question: q.question,
+            userAnsText: userAns !== null ? q.options[userAns] : "Non répondu (Temps écoulé)",
+            correctAnsText: q.options[q.answer]
+          });
+        }
+      });
+
+      const noteOn20 = ((rawScore / 40) * 20).toFixed(1);
+
+      // Determine 4-color mastery level
+      let masteryLevel = "";
+      let colorClass = "";
+      let bgBadgeClass = "";
+
+      if (noteOn20 < 10) {
+        masteryLevel = "Rouge - Non maîtrisé";
+        colorClass = "text-red-600";
+        bgBadgeClass = "bg-red-100 border-red-300 text-red-900";
+      } else if (noteOn20 < 13) {
+        masteryLevel = "Jaune - En cours d'acquisition";
+        colorClass = "text-amber-600";
+        bgBadgeClass = "bg-amber-100 border-amber-300 text-amber-900";
+      } else if (noteOn20 < 17) {
+        masteryLevel = "Vert - Maîtrisé";
+        colorClass = "text-emerald-600";
+        bgBadgeClass = "bg-emerald-100 border-emerald-300 text-emerald-900";
+      } else {
+        masteryLevel = "Vert Foncé - Très bonne maîtrise";
+        colorClass = "text-green-800";
+        bgBadgeClass = "bg-green-200 border-green-400 text-green-950 font-black";
+      }
+
+      // Render mistakes recap
+      let mistakesHTML = "";
+      if (mistakes.length === 0) {
+        mistakesHTML = `<p class="text-sm text-emerald-700 font-bold bg-emerald-50 p-4 rounded-xl border border-emerald-200">✨ Sans faute parfait ! Aucune erreur enregistrée.</p>`;
+      } else {
+        mistakes.forEach(m => {
+          mistakesHTML += `
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs sm:text-sm space-y-1">
+              <span class="font-extrabold text-slate-900 block">Question ${m.qNumber} : ${m.question}</span>
+              <p class="text-red-600">❌ Ta réponse : ${m.userAnsText}</p>
+              <p class="text-emerald-700 font-bold">✔ Bonne réponse : ${m.correctAnsText}</p>
+            </div>
+          `;
+        });
+      }
+
+      resultsContainer.innerHTML = `
+        <div class="text-center space-y-4">
+          <div class="w-20 h-20 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-4xl mx-auto font-bold">
+            🏆
+          </div>
+          <h2 class="text-3xl font-extrabold text-slate-900">Résultats de l'Évaluation</h2>
+          <p class="text-sm text-slate-500">Élève : <strong>${evalStudentInfo.prenom} ${evalStudentInfo.nom.toUpperCase()}</strong> | Classe : <strong>${evalStudentInfo.classe}</strong></p>
+          
+          <div class="max-w-md mx-auto p-6 rounded-3xl border-2 ${bgBadgeClass} space-y-2">
+            <span class="text-xs uppercase tracking-wider font-extrabold block">Note Finale</span>
+            <span class="text-5xl font-black block">${noteOn20} / 20</span>
+            <span class="text-sm font-bold block pt-1">Niveau de Maîtrise : ${masteryLevel}</span>
+          </div>
+        </div>
+
+        <div class="space-y-4 pt-4 border-t border-slate-200">
+          <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+            <span>📋 Récapitulatif des Erreurs (${mistakes.length} / 40)</span>
+          </h3>
+          <div class="max-h-96 overflow-y-auto custom-scrollbar space-y-3 pr-2">
+            ${mistakesHTML}
+          </div>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-4 pt-6 border-t border-slate-200">
+          <button onclick="downloadResultsTxt(${noteOn20}, '${masteryLevel}', ${rawScore})" class="px-6 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold rounded-2xl shadow-lg transition inline-flex items-center gap-2 text-sm">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            <span>Télécharger le bilan (.txt)</span>
+          </button>
+
+          <button onclick="switchTab('cours')" class="px-6 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-2xl transition text-sm">
+            Retour au Cours
+          </button>
+        </div>
+      `;
+    }
+
+    function downloadResultsTxt(note, mastery, rawScore) {
+      const today = new Date().toLocaleDateString('fr-FR');
+      let textContent = `=======================================================\n`;
+      textContent += `   BILAN D'ÉVALUATION DE TECHNOLOGIE - CYCLE 4 (5ème)\n`;
+      textContent += `=======================================================\n\n`;
+      textContent += `Nom : ${evalStudentInfo.nom.toUpperCase()}\n`;
+      textContent += `Prénom : ${evalStudentInfo.prenom}\n`;
+      textContent += `Classe : ${evalStudentInfo.classe}\n`;
+      textContent += `Date : ${today}\n`;
+      textContent += `Chapitre : Liens entre usages et évolutions technologiques\n\n`;
+      textContent += `-------------------------------------------------------\n`;
+      textContent += `RÉSULTATS DE L'ÉPREUVE (40 Questions) :\n`;
+      textContent += `-------------------------------------------------------\n`;
+      textContent += `Score Brut : ${rawScore} / 40\n`;
+      textContent += `NOTE FINALE SUR 20 : ${note} / 20\n`;
+      textContent += `Niveau de Maîtrise : ${mastery}\n\n`;
+      textContent += `-------------------------------------------------------\n`;
+      textContent += `DÉTAIL DES QUESTIONS DE L'ÉVALUATION :\n`;
+      textContent += `-------------------------------------------------------\n`;
+
+      evalQuestions.forEach((q, idx) => {
+        const userAns = evalAnswers[idx];
+        const isRight = userAns === q.answer;
+        const userText = userAns !== null ? q.options[userAns] : "Non répondu";
+        const correctText = q.options[q.answer];
+
+        textContent += `Q${idx + 1}: ${q.question}\n`;
+        textContent += `   Statut : ${isRight ? 'CORRECT [OK]' : 'INCORRECT [ERR]'}\n`;
+        textContent += `   Réponse choisie : ${userText}\n`;
+        if (!isRight) {
+          textContent += `   Bonne réponse   : ${correctText}\n`;
+        }
+        textContent += `\n`;
+      });
+
+      textContent += `=======================================================\n`;
+      textContent += `Document généré automatiquement le ${today}.\n`;
+
+      const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Evaluation_Techno_${evalStudentInfo.nom}_${evalStudentInfo.prenom}_${evalStudentInfo.classe.replace(/\s+/g, '')}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    /* ==========================================================================
+       7. FONT SIZE ACCESSIBILITY CONTROL & INITIALIZATION ON DOM LOAD
+       ========================================================================== */
+    function setFontSize(size, btnElement) {
+      document.documentElement.style.fontSize = size;
+      document.querySelectorAll('.font-size-btn').forEach(btn => {
+        btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-sm', 'font-bold', 'font-extrabold');
+        btn.classList.add('hover:bg-white', 'text-slate-700', 'font-medium');
+      });
+      if (btnElement) {
+        btnElement.classList.add('bg-indigo-600', 'text-white', 'shadow-sm', 'font-bold');
+        btnElement.classList.remove('hover:bg-white', 'text-slate-700', 'font-medium');
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // Default phone era
+      showPhoneEra(1);
+    });
+  </script>
+</body>
+</html>

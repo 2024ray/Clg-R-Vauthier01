@@ -1,0 +1,8 @@
+{
+  "name": "Remix Techno-Cycle4 : Évolution des Objets \u0026 Veille",
+  "description": "Application pédagogique interactive pour élèves de 5ème sur les usages et l\u0027évolution technologique des objets et la veille scientifique.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
