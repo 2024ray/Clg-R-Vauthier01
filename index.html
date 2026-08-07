@@ -538,282 +538,473 @@
     // Unlocking state
     let isEvalUnlocked = false;
 
-    // Training Questions Data (20 questions)
+    // Training Questions Data (20 questions with varied types: Appariement, Ordonnancement, Visuel, Cloze, QCM)
     const trainingQuestions = [
       {
         id: 1,
-        type: "qcm",
-        question: "Qu'est-ce que la veille technologique ?",
-        options: [
-          "Dormir pendant que les machines travaillent",
-          "Collecter, trier et analyser des informations pour anticiper les évolutions",
-          "Regarder des vidéos sur YouTube toute la journée",
-          "Fabriquer un objet le plus vite possible"
+        type: "appariement",
+        question: "Mise en correspondance : Associe chaque étape de la veille technologique à sa description exacte.",
+        pairs: [
+          { left: "1. Collecter", right: "Rassembler des brevets, articles et données d'utilisateurs" },
+          { left: "2. Trier", right: "Éliminer les fausses informations et sélectionner le pertinent" },
+          { left: "3. Analyser", right: "Comprendre les nouvelles tendances et anticiper les besoins" },
+          { left: "4. Exploiter", right: "Utiliser l'information pour concevoir un produit innovant" }
         ],
-        answer: 1,
-        explanation: "La veille technologique est une démarche organisée pour s'informer en continu sur les innovations et les besoins."
+        explanation: "La démarche de veille passe obligatoirement par la collecte, le tri/filtrage, l'analyse stratégique et enfin l'exploitation dans la conception."
       },
       {
         id: 2,
-        type: "vf",
-        question: "Vrai ou Faux : La fonction d'usage de base d'un téléphone (communiquer à distance) a changé entre l'an 2000 et aujourd'hui.",
-        options: ["Vrai", "Faux"],
-        answer: 1,
-        explanation: "FAUX ! La fonction de base reste 'Communiquer à distance', mais ce sont les principes techniques et les fonctions secondaires qui ont évolué."
+        type: "ordonnancement",
+        question: "Mise en séquence : Remets dans l'ordre chronologique l'évolution des technologies d'éclairage (du plus ancien au plus récent).",
+        items: [
+          "1. Bougie et lampe à huile (combustion)",
+          "2. Ampoule à incandescence à filament de tungstène",
+          "3. Tube fluorescent et ampoule basse consommation",
+          "4. Ampoule LED à électroluminescence"
+        ],
+        explanation: "L'éclairage a évolué de la combustion thermique (bougie) à l'incandescence électrique, puis à la fluorescence et enfin aux LED semi-conductrices à haut rendement."
       },
       {
         id: 3,
-        type: "qcm",
-        question: "Quel besoin a motivé le passage du téléphone à clapet au smartphone tactile ?",
+        type: "visuel",
+        question: "En observant le schéma comparatif ci-dessous, quel est le principal avantage énergétique de l'ampoule LED par rapport à l'ampoule incandescente ?",
+        context: {
+          badge: "📊 SCHÉMA COMPARATIF ÉNERGÉTIQUE",
+          title: "Répartition de l'énergie consommée",
+          content: `<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs"><div class="p-3 bg-red-50 border border-red-200 rounded-xl space-y-1"><span class="font-bold text-red-700">💡 Ampoule à filament (Incandescente)</span><p class="text-slate-600">• 5% Lumière utile</p><p class="text-red-600 font-bold">• 95% Perte en Chaleur (Effet Joule)</p></div><div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl space-y-1"><span class="font-bold text-emerald-700">🌱 Ampoule LED moderne</span><p class="text-emerald-700 font-bold">• 85% à 90% Énergie transformée en lumière</p><p class="text-slate-600">• 10% Pertes thermiques minimes</p></div></div>`
+        },
         options: [
-          "Naviguer sur Internet, prendre des photos et utiliser des applications sur un grand écran",
-          "Rendre le téléphone plus lourd",
-          "Augmenter le nombre de boutons physiques",
-          "Réduire le prix du téléphone"
+          "Elle chauffe la pièce pour remplacer un radiateur",
+          "Elle transforme la majorité de l'électricité en lumière au lieu de la perdre en chaleur",
+          "Elle nécessite du pétrole pour s'allumer",
+          "Elle s'éteint automatiquement au bout de 5 minutes"
         ],
-        answer: 0,
-        explanation: "Les nouveaux usages (photos, Web, applis) ont nécessité de remplacer le clavier physique par un grand écran tactile."
+        answer: 1,
+        explanation: "Comme le montre le schéma, l'ampoule incandescente perdait 95% d'énergie sous forme de chaleur, alors que la LED convertit jusqu'à 90% en lumière."
       },
       {
         id: 4,
-        type: "qcm",
-        question: "Parmi ces technologies d'éclairage, laquelle consomme le moins d'énergie pour une même quantité de lumière ?",
-        options: [
-          "La bougie",
-          "L'ampoule à incandescence à filament",
-          "L'ampoule LED",
-          "La lampe à pétrole"
+        type: "cloze",
+        question: "Texte à trous : Complète la définition de l'Analyse du Cycle de Vie (ACV).",
+        text: "L'Analyse du Cycle de Vie (**ACV**) permet d'évaluer l'impact écologique d'un objet du **[0]** au **[1]**. Elle prend en compte l'extraction des **[2]**, la fabrication, l'utilisation et le **[3]** final.",
+        blanks: [
+          { correct: "berceau", choices: ["berceau", "magasin", "bureau"] },
+          { correct: "tombeau", choices: ["tombeau", "carton", "moteur"] },
+          { correct: "matières premières", choices: ["matières premières", "piles", "logiciels"] },
+          { correct: "recyclage", choices: ["recyclage", "prix", "brevet"] }
         ],
-        answer: 2,
-        explanation: "L'ampoule LED utilise l'électroluminescence et économise jusqu'à 85% d'énergie par rapport à l'incandescence !"
+        explanation: "L'ACV est globale : elle analyse les impacts environnementaux à TOUTES les étapes de la vie du produit ('du berceau au tombeau')."
       },
       {
         id: 5,
-        type: "qcm",
-        question: "À quoi sert un brevet d'invention ?",
-        options: [
-          "À donner une note d'écologie à un objet",
-          "À protéger juridiquement une invention pour empêcher sa copie non autorisée",
-          "À réduire la facture d'électricité",
-          "À rendre un objet plus lourd"
+        type: "appariement",
+        question: "Mise en correspondance : Relie chaque génération de téléphone mobile à son usage principal.",
+        pairs: [
+          { left: "Téléphone à clapet (2G)", right: "Appels vocaux et SMS uniquement" },
+          { left: "Smartphone tactile (4G)", right: "Navigation Internet, photos et applications" },
+          { left: "Smartphone IA (5G)", right: "Assistant vocal intelligent, domotique et réalité augmentée" }
         ],
-        answer: 1,
-        explanation: "Le brevet protège la propriété intellectuelle de l'inventeur pendant une durée limitée (souvent 20 ans)."
+        explanation: "Chaque génération a apporté de nouveaux usages grâce à l'évolution des principes techniques (réseaux, écrans tactiles, puces IA)."
       },
       {
         id: 6,
-        type: "vf",
-        question: "Vrai ou Faux : L'Indice de Réparabilité permet de savoir si un appareil électronique est facile à réparer.",
-        options: ["Vrai", "Faux"],
-        answer: 0,
-        explanation: "VRAI ! Cet indice (sur 10) informe le consommateur sur la facilité de démontage et la disponibilité des pièces détachées."
+        type: "ordonnancement",
+        question: "Mise en séquence : Remets dans l'ordre les étapes du cycle de vie d'un smartphone éco-conçu.",
+        items: [
+          "1. Extraction responsable des matières premières (cobalt, aluminium)",
+          "2. Fabrication en usine avec pièces démontables",
+          "3. Utilisation durable par le consommateur avec réparations",
+          "4. Recyclage et revalorisation des composants en fin de vie"
+        ],
+        explanation: "Le cycle de vie commence à l'extraction des ressources, se poursuit par la fabrication et l'usage, et s'achève par le recyclage."
       },
       {
         id: 7,
-        type: "qcm",
-        question: "Que signifie 'ACV' dans le domaine de l'éco-conception ?",
+        type: "visuel",
+        question: "Analyse la fiche d'Indice de Réparabilité ci-dessous : Quelle information majeure cet affichage apporte-t-il à l'acheteur ?",
+        context: {
+          badge: "📄 FICHE ÉTIQUETTE INDICE DE RÉPARABILITÉ",
+          title: "Smartphone Modèle Nova - Note : 8.2 / 10",
+          content: `<div class="p-4 bg-slate-900 text-white rounded-xl space-y-2 text-xs"><div class="flex items-center justify-between border-b border-slate-700 pb-2"><span class="font-extrabold text-emerald-400 text-sm">INDICE DE RÉPARABILITÉ : 8.2 / 10</span><span class="px-2 py-0.5 bg-emerald-500 text-slate-950 font-bold rounded">Très Facile</span></div><p>• Disponibilité des pièces détachées : 10/10 (disponibles 10 ans)</p><p>• Facilité de démontage (vis standards, pas de colle) : 8.5/10</p><p>• Prix des pièces détachées rapporté au prix neuf : 7.5/10</p></div>`
+        },
         options: [
-          "Analyse du Cycle de Vie",
-          "Appareil Connecté Vert",
-          "Association des Consommateurs Vélo",
-          "Achat de Composants Neufs"
+          "Que le smartphone est incassable et résiste à l'eau de mer",
+          "Qu'il sera facile à démonter et qu'on trouvera des pièces de rechange pendant 10 ans pour le réparer",
+          "Qu'il fonctionne sans batterie et sans électricité",
+          "Qu'il coûte 8,20 euros en magasin"
         ],
-        answer: 0,
-        explanation: "ACV = Analyse du Cycle de Vie. Elle calcule les impacts environnementaux 'du berceau au tombeau'."
+        answer: 1,
+        explanation: "Une note élevée (8.2/10) garantit un démontage aisé et la disponibilité des pièces pour prolonger la durée de vie de l'appareil."
       },
       {
         id: 8,
-        type: "qcm",
-        question: "Deux objets qui répondent à la même fonction d'usage (ex: se déplacer) utilisent-ils toujours le même principe technique ?",
-        options: [
-          "Oui, obligatoirement",
-          "Non, ils peuvent utiliser des principes très différents (ex: moteur thermique vs vélo mécanique)",
-          "Seulement s'ils sont de la même couleur",
-          "Seulement s'ils sont électriques"
+        type: "cloze",
+        question: "Texte à trous : Complète les principes de la propriété intellectuelle.",
+        text: "Un **[0]** d'invention est un titre juridique déposé pour **[1]** une création technique pendant **[2]** ans. La consultation des bases de brevets fait partie de la **[3]** technologique.",
+        blanks: [
+          { correct: "brevet", choices: ["brevet", "diplôme", "contrat"] },
+          { correct: "protéger", choices: ["protéger", "vendre", "détruire"] },
+          { correct: "20", choices: ["20", "2", "200"] },
+          { correct: "veille", choices: ["veille", "publicité", "comptabilité"] }
         ],
-        answer: 1,
-        explanation: "Une même fonction d'usage peut être réalisée par divers principes techniques (moteur à essence, muscle humain, moteur électrique, etc.)."
+        explanation: "Le brevet protège une invention pendant 20 ans et constitue une source d'information clé pour la veille technologique."
       },
       {
         id: 9,
-        type: "qcm",
-        question: "Quelle est la 1ère étape de la démarche de veille technologique ?",
-        options: [
-          "Jeter tous les anciens téléphones",
-          "Collecter des données et informations",
-          "Déposer un brevet sans chercher",
-          "Vendre un objet aux clients"
+        type: "appariement",
+        question: "Mise en correspondance : Associe chaque objet technique au principe physique ou mécanique qu'il utilise pour fonctionner.",
+        pairs: [
+          { left: "Vélo mécanique", right: "Transmission par chaîne et pignons entrainés par l'effort humain" },
+          { left: "Moteur à essence", right: "Combustion interne d'un mélange air/carburant" },
+          { left: "Trottinette électrique", right: "Conversion d'énergie électrique stockée dans une batterie en énergie mécanique" }
         ],
-        answer: 1,
-        explanation: "La 1ère étape est la collecte d'informations provenant de diverses sources (articles, brevets, avis clients)."
+        explanation: "Des principes physiques très différents (effort musculaire, combustion chimique, conversion électromécanique) permettent d'assurer la même fonction 'se déplacer'."
       },
       {
         id: 10,
-        type: "vf",
-        question: "Vrai ou Faux : Un objet éco-conçu prend en compte l'environnement uniquement lors de son recyclage final.",
-        options: ["Vrai", "Faux"],
-        answer: 1,
-        explanation: "FAUX ! L'éco-conception prend en compte l'impact écologique dès la phase de conception et à TOUTES les étapes de la vie de l'objet."
+        type: "ordonnancement",
+        question: "Mise en séquence : Ordonne les étapes de la miniaturisation informatique au XXe siècle.",
+        items: [
+          "1. Tubes à vide imposants et fragiles (ordinateurs géants)",
+          "2. Invention du transistor individuel à semi-conducteur",
+          "3. Microprocesseur intégrant des millions de transistors sur une puce",
+          "4. Puces gravées en nanomètres avec unités d'Intelligence Artificielle"
+        ],
+        explanation: "La transition des tubes électroniques vers les transistors puis les puces hautement intégrées a permis la miniaturisation des ordinateurs."
       },
       {
         id: 11,
-        type: "qcm",
-        question: "Pourquoi remplace-t-on de plus en plus les plastiques issus du pétrole par des bio-matériaux ?",
+        type: "visuel",
+        question: "À partir du scénario ci-dessous, quelle contrainte environnementale pousse cette entreprise de transports à faire évoluer sa flotte ?",
+        context: {
+          badge: "📋 ÉTUDE DE CAS ENTREPRISE",
+          title: "Transition Écologique - Flotte Transports Express",
+          content: `<div class="p-3 bg-indigo-50 border border-indigo-200 rounded-xl text-xs space-y-1 text-slate-700"><p><strong>Mise en situation :</strong> En 2025, les villes interdisent l'accès aux véhicules diesel (Zones à Faibles Émissions). L'entreprise doit remplacer ses utilitaires par des modèles électriques ou à hydrogène pour continuer à livrer en centre-ville.</p></div>`
+        },
         options: [
-          "Parce qu'ils sont plus polluants",
-          "Pour réduire la dépendance au pétrole et faciliter la dégradabilité/recyclabilité",
-          "Parce qu'ils coûtent 100 fois plus cher",
-          "Pour rendre les objets invisibles"
+          "Une réglementation légale et environnementale imposant la réduction des émissions de CO2 et de particules",
+          "Le désir de peindre les camionnettes en vert",
+          "Une obligation de fabriquer des camions volant dans les airs",
+          "L'interdiction d'utiliser le réseau GPS"
         ],
-        answer: 1,
-        explanation: "Les bio-matériaux (issus du maïs, du bois, du lin) réduisent l'empreinte carbone et améliorent la durabilité."
+        answer: 0,
+        explanation: "Les normes environnementales (ZFE, réglementations CO2) forcent les entreprises à adopter des principes techniques non polluants."
       },
       {
         id: 12,
-        type: "qcm",
-        question: "Parmi ces éléments, lequel est une source de veille scientifique très fiable ?",
-        options: [
-          "Une rumeur sur TikTok",
-          "Un article publié dans une revue scientifique reconnue",
-          "La vidéo d'un influenceur payé pour une pub",
-          "Un commentaire anonyme sur un forum"
+        type: "cloze",
+        question: "Texte à trous : Complète la phrase sur l'ergonomie et la sobriété numérique.",
+        text: "L'**[0]** concerne la facilité d'utilisation d'un objet pour l'humain. De plus, la **[1]** énergétique cherche à limiter le **[2]** d'électricité pour réduire l'impact environnemental des objets **[3]**.",
+        blanks: [
+          { correct: "ergonomie", choices: ["ergonomie", "taille", "vitesse"] },
+          { correct: "sobriété", choices: ["sobriété", "hausse", "vapeur"] },
+          { correct: "gaspillage", choices: ["gaspillage", "stock", "poids"] },
+          { correct: "connectés", choices: ["connectés", "cassés", "invisibles"] }
         ],
-        answer: 1,
-        explanation: "Les articles de revues scientifiques à comité de lecture apportent des preuves vérifiées et fiables."
+        explanation: "L'ergonomie optimise le confort d'usage, tandis que la sobriété énergétique évite le gaspillage électrique des appareils."
       },
       {
         id: 13,
-        type: "vf",
-        question: "Vrai ou Faux : Trier l'information récoltée lors d'une veille permet d'éliminer les fausses nouvelles (fake news).",
-        options: ["Vrai", "Faux"],
-        answer: 0,
-        explanation: "VRAI ! Le tri permet de ne conserver que les données fiables, pertinentes et récentes."
+        type: "appariement",
+        question: "Mise en correspondance : Associe chaque concept d'éco-conception à sa définition.",
+        pairs: [
+          { left: "Recyclabilité", right: "Capacité d'un matériau à être retraité pour créer un nouveau produit" },
+          { left: "Obsolescence programmée", right: "Pratique visant à réduire délibérément la durée de vie d'un produit" },
+          { left: "Matière biosourcée", right: "Matériau issu de ressources naturelles renouvelables (ex: maïs, lin)" }
+        ],
+        explanation: "Ces termes caractérisent les enjeux modernes de l'éco-conception et de la durabilité des produits."
       },
       {
         id: 14,
-        type: "qcm",
-        question: "Quel composant a permis de miniaturiser les ordinateurs et téléphones au cours du XXe siècle ?",
-        options: [
-          "La lampe à huile",
-          "Le transistor et le microprocesseur à semi-conducteur",
-          "Le moteur à vapeur",
-          "Le câble en cuivre géant"
+        type: "ordonnancement",
+        question: "Mise en séquence : Classe ces modes d'impression du plus ancien au plus récent.",
+        items: [
+          "1. Impression mécanique à caractères mobiles (Presse de Gutenberg)",
+          "2. Imprimante matricielle à aiguilles",
+          "3. Imprimante à jet d'encre et laser numérique",
+          "4. Imprimante 3D (fabrication additive)"
         ],
-        answer: 1,
-        explanation: "L'invention des transistors puis des puces microélectroniques a permis de réduire la taille des circuits tout en augmentant la puissance !"
+        explanation: "L'impression est passée du marquage physique sur papier à l'impression numérique puis à la fabrication tridimensionnelle."
       },
       {
         id: 15,
-        type: "qcm",
-        question: "Que vise la sobriété énergétique pour un objet technique ?",
+        type: "visuel",
+        question: "En lisant l'extrait de Cahier des Charges ci-dessous, quelle contrainte d'usage est exigée pour cette lampe de bureau ?",
+        context: {
+          badge: "📑 CAHIER DES CHARGES",
+          title: "Projet Lampe Nomad-Tech",
+          content: `<div class="p-3 bg-slate-100 border border-slate-300 rounded-xl text-xs space-y-1 font-mono text-slate-800"><p>• Fonction principale : Éclairer un plan de travail</p><p>• Contrainte 1 : Alimentation par batterie rechargeable USB-C (Autonomie >= 8h)</p><p>• Contrainte 2 : Indice de réparabilité >= 8/10</p></div>`
+        },
         options: [
-          "Consommer le moins d'énergie possible pour réaliser son service",
-          "Utiliser 10 piles en même temps",
-          "Consommer toute l'énergie en 5 secondes",
-          "Ne plus jamais fonctionner"
+          "Fonctionner sans fil pendant au moins 8 heures grâce à une batterie rechargeable",
+          "Être branchée en permanence sur une prise secteur 220V",
+          "Utiliser de l'huile de pétrole pour brûler",
+          "Mesurer au moins 3 mètres de haut"
         ],
         answer: 0,
-        explanation: "La sobriété énergétique consiste à optimiser les performances pour réduire le gaspillage d'énergie."
+        explanation: "Le cahier des charges impose une alimentation par batterie USB-C avec une autonomie minimale de 8 heures."
       },
       {
         id: 16,
-        type: "vf",
-        question: "Vrai ou Faux : Les réseaux 5G et l'Intelligence Artificielle sont des évolutions technologiques récentes modifiant les usages des smartphones.",
-        options: ["Vrai", "Faux"],
-        answer: 0,
-        explanation: "VRAI ! L'IA intégrée et les réseaux haut débit créent de nouveaux usages comme la traduction en temps réel et la domotique."
+        type: "cloze",
+        question: "Texte à trous : Complète le paragraphe sur la fonction d'usage et le principe technique.",
+        text: "Deux objets qui partagent la même **[0]** d'usage (ex: nettoyer le sol) peuvent utiliser des **[1]** techniques très différents : par exemple un balai mécanique à la force des bras ou un **[2]** robot automatisé avec capteurs.",
+        blanks: [
+          { correct: "fonction", choices: ["fonction", "marque", "couleur"] },
+          { correct: "principes", choices: ["principes", "prix", "noms"] },
+          { correct: "aspirateur", choices: ["aspirateur", "four", "vélo"] }
+        ],
+        explanation: "Une même fonction peut être réalisée par des principes techniques manuels, mécaniques ou automatisés."
       },
       {
         id: 17,
-        type: "qcm",
-        question: "Si une ampoule incandescente transforme 95% de son énergie en chaleur, quelle est sa fonction non désirée ?",
-        options: [
-          "Éclairer la pièce",
-          "Chauffer inutilement l'air environnant (perte thermique)",
-          "Émettre du son",
-          "Recharger la batterie"
-        ],
-        answer: 1,
-        explanation: "L'effet Joule (dégagement de chaleur) est une perte d'énergie non désirée pour une lampe dont le rôle est d'éclairer."
+        type: "vf",
+        question: "Vrai ou Faux : Consulter les articles scientifiques à comité de lecture est une méthode de veille fiable pour éviter les fausses informations.",
+        options: ["Vrai", "Faux"],
+        answer: 0,
+        explanation: "VRAI ! Les revues scientifiquement évaluées garantissent la fiabilité des informations récoltées lors de la veille."
       },
       {
         id: 18,
         type: "qcm",
-        question: "Laquelle de ces démarches prolonge la durée de vie d'un appareil ?",
+        question: "Pourquoi remplace-t-on les plastiques pétrochimiques par des plastiques biosourcés ?",
         options: [
-          "Le jeter dès la première panne",
-          "Remplacer la batterie usagée grâce à sa réparabilité",
-          "Le laisser sous la pluie",
-          "Mettre du sable dans les prises"
+          "Pour réduire la dépendance au pétrole et diminuer l'empreinte carbone",
+          "Parce qu'ils rendent l'objet invisible",
+          "Pour augmenter le poids des appareils",
+          "Parce que le pétrole est gratuit"
         ],
-        answer: 1,
-        explanation: "Pouvoir réparer et changer une batterie usagée évite le remplacement prématuré de tout l'objet !"
+        answer: 0,
+        explanation: "Les plastiques biosourcés (issus du maïs, du lin, du bois) réduisent l'impact écologique et l'utilisation de ressources fossiles."
       },
       {
         id: 19,
         type: "vf",
-        question: "Vrai ou Faux : Un cahier des charges décrit l'ensemble des besoins et contraintes auxquels l'objet doit répondre.",
+        question: "Vrai ou Faux : L'éco-conception prend en compte l'impact sur l'environnement uniquement au moment du recyclage.",
         options: ["Vrai", "Faux"],
-        answer: 0,
-        explanation: "VRAI ! Le cahier des charges fixe les règles du jeu (fonctions, budget, normes de sécurité, contraintes écologiques)."
+        answer: 1,
+        explanation: "FAUX ! L'éco-conception prend en compte l'impact environnemental DÈS la phase de conception et à TOUTES les étapes de la vie de l'objet."
       },
       {
         id: 20,
         type: "qcm",
-        question: "En résumé, qu'est-ce qui fait évoluer principalement les objets techniques ?",
+        question: "En synthèse, quels sont les 4 moteurs majeurs de l'évolution des objets techniques ?",
         options: [
-          "Le hasard uniquement",
-          "L'évolution des besoins, des usages, des progrès scientifiques et des contraintes écologiques/économiques",
-          "La volonté de rendre les objets plus compliqués",
-          "La couleur de peinture préférée du designer"
+          "Le hasard, la chance, la couleur et le bruit",
+          "L'évolution des besoins/usages, les progrès scientifiques, les contraintes économiques et le respect de l'environnement",
+          "L'obligation de rendre tout plus compliqué et plus cher",
+          "La décision d'un seul inventeur sans consulter personne"
         ],
         answer: 1,
-        explanation: "C'est la combinaison des besoins des utilisateurs, des découvertes scientifiques et du respect de la planète qui guide les évolutions !"
+        explanation: "Les objets évoluent pour répondre aux nouveaux besoins humains grâce aux découvertes scientifiques tout en respectant l'environnement et l'économie."
       }
     ];
 
-    // Evaluation Questions Data (40 unique questions)
+    // Evaluation Questions Data (40 questions with varied interactive formats)
     const evalQuestions = [
-      { id: 1, question: "La veille technologique consiste principalement à :", options: ["Dormir en surveillant les usines", "Observer, collecter et analyser l'information pour anticiper les évolutions", "Copier exactement le produit du voisin", "Acheter le produit le plus cher"], answer: 1 },
-      { id: 2, question: "Vrai ou Faux : Une étude de marché permet d'analyser les attentes et besoins des futurs utilisateurs.", options: ["Vrai", "Faux"], answer: 0 },
-      { id: 3, question: "Quelle est la fonction d'usage principale d'une montre connectée ?", options: ["Cuire un œuf à la coque", "Mesurer le temps et apporter des fonctions numériques d'assistance", "Servir de marteau", "Remplacer un vélo"], answer: 1 },
-      { id: 4, question: "Parmi ces principes d'éclairage, lequel est historiquement le plus ancien ?", options: ["L'ampoule LED", "La bougie / lampe à combustion", "Le tube fluorescent", "L'ampoule halogène"], answer: 1 },
-      { id: 5, question: "Vrai ou Faux : L'ampoule LED fonctionne grâce à un filament chauffé à très haute température.", options: ["Vrai", "Faux"], answer: 1 },
-      { id: 6, question: "Qu'est-ce qu'un 'principe technique' ?", options: ["Le prix de vente en magasin", "La solution scientifique/physique retenue pour assurer une fonction", "Le nom de la marque de l'objet", "Le pays où l'objet est vendu"], answer: 1 },
-      { id: 7, question: "Deux objets répondant à la fonction 'Nettoyer le sol' (ex: balai mécanique vs aspirateur robot) :", options: ["Utilisent obligatoirement le même principe", "Répondent au même besoin mais avec des principes techniques différents", "Ne peuvent pas exister en même temps", "Ont été inventés la même année"], answer: 1 },
-      { id: 8, question: "Vrai ou Faux : Le téléphone à cadran rotatif et le smartphone répondent au besoin fondamental de communiquer à distance.", options: ["Vrai", "Faux"], answer: 0 },
-      { id: 9, question: "Sur quelle note maximale est évalué l'Indice de Réparabilité en France ?", options: ["Sur 5", "Sur 10", "Sur 20", "Sur 100"], answer: 1 },
-      { id: 10, question: "Qu'appelle-t-on l'obsolescence programmée ?", options: ["Un programme d'entraînement sportif", "La réduction volontaire de la durée de vie d'un produit pour pousser à son remplacement", "Le fait de réparer un objet gratuitement", "Le téléchargement d'une mise à jour de sécurité"], answer: 1 },
-      { id: 11, question: "Vrai ou Faux : L'Analyse du Cycle de Vie (ACV) évalue l'impact écologique 'du berceau au tombeau'.", options: ["Vrai", "Faux"], answer: 0 },
-      { id: 12, question: "Quel est l'avantage majeur des plastiques biosourcés ?", options: ["Ils ne fondent jamais", "Ils sont fabriqués à partir de matières renouvelables (ex: maïs) au lieu du pétrole", "Ils sont entièrement invisibles", "Ils coûtent zéro euro"], answer: 1 },
-      { id: 13, question: "Pourquoi les constructeurs automobiles développent-ils des véhicules électriques ?", options: ["Pour faire plus de bruit", "Pour répondre aux normes écologiques et réduire les émissions directes de CO2", "Parce que le pétrole est inépuisable", "Pour supprimer les roues"], answer: 1 },
-      { id: 14, question: "Vrai ou Faux : Un brevet protège une invention indéfiniment pendant 500 ans.", options: ["Vrai", "Faux"], answer: 1 },
-      { id: 15, question: "Lors d'une veille, quelle est la source d'information la plus fiable scientifiquement ?", options: ["Les revues scientifiques à comité de lecture et bases de brevets", "Les vidéos d'humour sur TikTok", "Un SMS reçu d'un inconnu", "Un prospectus publicitaire"], answer: 0 },
-      { id: 16, question: "Quel est le principal avantage de la LED face à l'ampoule incandescente ?", options: ["Elle chauffe la pièce très fort", "Elle consomme beaucoup moins d'électricité et dure plus longtemps", "Elle casse facilement", "Elle nécessite du pétrole pour brûler"], answer: 1 },
-      { id: 17, question: "Vrai ou Faux : Un objet connecté envoie ou reçoit des données via un réseau sans fil (Wi-Fi, Bluetooth, 4G/5G).", options: ["Vrai", "Faux"], answer: 0 },
-      { id: 18, question: "Dans le domaine du déplacement individuel, quel usage a émergé récemment en ville ?", options: ["La trottinette électrique en libre-service", "Le voyage en calèche à cheval", "La marche à reculons", "Le patin à roulettes en fer"], answer: 0 },
-      { id: 19, question: "Que signifie la 'recyclabilité' d'un matériau ?", options: ["Sa capacité à être retraité pour fabriquer de nouveaux objets", "Son prix de vente d'occasion", "Sa couleur après séchage", "Le poids de son emballage"], answer: 0 },
-      { id: 20, question: "Vrai ou Faux : Miniaturiser des puces électroniques permet d'intégrer plus de fonctionnalités dans un espace réduit.", options: ["Vrai", "Faux"], answer: 0 },
-      { id: 21, question: "Quelle est la fonction d'usage commune à un poêle à bois et un radiateur électrique ?", options: ["Éclairer la cuisine", "Chauffer une pièce", "Refroidir les aliments", "Produire de la musique"], answer: 1 },
-      { id: 22, question: "Quel critère caractérise un objet éco-conçu ?", options: ["Facilement réparable, économe en énergie et fabriqué avec des matériaux recyclables", "Jetable après une utilisation", "Emballé dans 10 couches de plastique non recyclable", "Fabriqué à l'autre bout du monde sans normes"], answer: 0 },
-      { id: 23, question: "Vrai ou Faux : Les normes environnementales imposées par la loi forcent les entreprises à faire évoluer leurs technologies.", options: ["Vrai", "Faux"], answer: 0 },
-      { id: 24, question: "Quelle étape de la veille technologique consiste à vérifier si une info est vraie ou fausse ?", options: ["La collecte massive", "Le tri et la vérification de pertinence/fiabilité", "La destruction des ordinateurs", "L'impression sur papier"], answer: 1 },
-      { id: 25, question: "Dans le domaine de l'impression, quelle technologie est plus récente que la presse mécanique de Gutenberg ?", options: ["L'imprimante 3D et l'imprimante laser", "La gravure sur pierre", "Le pinceau en poils de sanglier", "Le manuscrit à la main"], answer: 0 },
-      { id: 26, question: "Vrai ou Faux : La baisse du coût des capteurs favorise la démocratisation des objets intelligents.", options: ["Vrai", "Faux"], answer: 0 },
-      { id: 27, question: "Quel est l'un des impacts de la numérisation sur nos usages ?", options: ["La réduction de l'utilisation du papier au profit des documents numériques", "L'interdiction des ordinateurs", "L'obligation d'écrire à la plume", "L'extinction d'Internet"], answer: 0 },
-      { id: 28, question: "Quelle technologie d'écran offre un contraste élevé avec des pixels auto-émissifs ?", options: ["Écran OLED", "Écran à tube cathodique géant", "Feuille de papier journal", "Ardoise en pierre"], answer: 0 },
-      { id: 29, question: "Vrai ou Faux : Supprimer le clavier physique sur un téléphone pour le remplacer par un écran tactile est une évolution du principe technique.", options: ["Vrai", "Faux"], answer: 0 },
-      { id: 30, question: "Quel est l'intérêt de la batterie Lithium-ion par rapport aux anciennes batteries ?", options: ["Elle stocke plus d'énergie dans un volume et un poids réduits", "Elle doit être branchée 24h/24 au secteur", "Elle fonctionne au charbon", "Elle ne se recharge jamais"], answer: 0 },
-      { id: 31, question: "Quelle action permet d'éviter de jeter un objet en panne ?", options: ["Consulter le guide de réparation et changer la pièce défectueuse", "Le jeter à la poubelle ordinaire", "Le casser avec un marteau", "Racheter le dernier modèle immédiatement"], answer: 0 },
-      { id: 32, question: "Vrai ou Faux : La veille technologique ne sert qu'aux professeurs de technologie.", options: ["Vrai", "Faux"], answer: 1 },
-      { id: 33, question: "Quel facteur économique incite à choisir un nouveau principe technique ?", options: ["Réduire les coûts de fabrication et la consommation d'énergie", "Augmenter le gaspillage de matière", "Rendre le produit hors de prix pour tous", "Payer des amendes d'invalidation"], answer: 0 },
-      { id: 34, question: "Que mesure l'étiquette énergie (A à G) sur un appareil électroménager ?", options: ["Sa consommation électrique et son efficacité énergétique", "La vitesse de rotation de ses roues", "Le bruit des touches", "La durée de sa garantie"], answer: 0 },
-      { id: 35, question: "Vrai ou Faux : L'ergonomie désigne la capacité d'un objet à être facilement et confortablement utilisé par l'être humain.", options: ["Vrai", "Faux"], answer: 0 },
-      { id: 36, question: "Quel réseau sans fil à courte portée permet le paiement sans contact (NFC) ou le couplage d'un casque audio ?", options: ["Bluetooth / NFC", "Câble sous-marin", "Ondes radio FM longue portée", "Satellite géostationnaire"], answer: 0 },
-      { id: 37, question: "Laquelle de ces démarches réduit directement l'empreinte carbone d'un objet ?", options: ["Préférer des matériaux locaux et recyclés avec un transport court", "Utiliser du pétrole extraite à 15 000 km", "Emballer chaque vis dans du plastique individuel", "Changer de téléphone tous les 2 mois"], answer: 0 },
-      { id: 38, question: "Vrai ou Faux : Les objets techniques évoluent en permanence car les besoins humains et les connaissances scientifiques changent.", options: ["Vrai", "Faux"], answer: 0 },
-      { id: 39, question: "Quel est le rôle du cahier des charges dans un projet de technologie ?", options: ["Fixer les besoins, fonctions et contraintes à respecter", "Raconter une histoire pour enfants", "Donner la recette du gâteau au chocolat", "Lister les prénoms des élèves"], answer: 0 },
-      { id: 40, question: "En conclusion, un objet technique moderne performant doit :", options: ["Répondre à un besoin, être ergonomique, économe et éco-conçu", "Consommer le plus d'énergie possible", "Être impossible à réparer", "N'avoir aucune utilité"], answer: 0 }
+      {
+        id: 1,
+        type: "appariement",
+        question: "Mise en correspondance : Associe chaque étape de la veille technologique à sa finalité.",
+        pairs: [
+          { left: "1. Collecte", right: "Rechercher des brevets, articles scientifiques et avis clients" },
+          { left: "2. Tri", right: "Éliminer les fausses rumeurs et classer l'information utile" },
+          { left: "3. Analyse", right: "Identifier les opportunités et menaces pour le nouveau produit" }
+        ],
+        explanation: "La démarche de veille suit un ordre méthodique pour guider la stratégie de l'entreprise."
+      },
+      {
+        id: 2,
+        type: "ordonnancement",
+        question: "Mise en séquence : Remets dans l'ordre chronologique les étapes de l'histoire du téléphone portable.",
+        items: [
+          "1. Radiotéléphone sous forme de valise lourde (1G)",
+          "2. Téléphone monobloc à touches physiques (2G / GSM)",
+          "3. Téléphone à clapet compact (2G)",
+          "4. Smartphone tout-tactile connecté à Internet (3G/4G/5G)"
+        ],
+        explanation: "L'évolution s'est faite vers la réduction du poids, puis l'ergonomie des fermetures et enfin l'écran capacitif tactile."
+      },
+      {
+        id: 3,
+        type: "visuel",
+        question: "Analyse le bilan énergétique ci-dessous : Quel pourcentage d'énergie l'ampoule incandescente gaspille-t-elle en chaleur inutile ?",
+        context: {
+          badge: "📊 BILAN THERMIQUE INCANDESCENCE",
+          title: "Ampoule à filament de tungstène (100W)",
+          content: `<div class="p-3 bg-red-100 border border-red-300 rounded-xl text-xs text-red-950 font-semibold space-y-1"><p>• Énergie électrique absorbée : 100 Watts</p><p>• Énergie lumineuse restituée : 5 Watts (5%)</p><p>• Pertes par effet Joule (chaleur) : 95 Watts (95%)</p></div>`
+        },
+        options: ["5%", "50%", "95%", "100%"],
+        answer: 2,
+        explanation: "L'ampoule incandescente perdait 95% de son énergie en chaleur, ce qui a motivé son interdiction au profit des LED."
+      },
+      {
+        id: 4,
+        type: "cloze",
+        question: "Texte à trous : Complète la phrase sur l'Indice de Réparabilité.",
+        text: "L'Indice de Réparabilité est une note sur **[0]** obligatoire en France. Il évalue la disponibilité des **[1]** détachées, la facilité de **[2]** et le prix des composants pour lutter contre l'obsolescence.",
+        blanks: [
+          { correct: "10", choices: ["10", "20", "100"] },
+          { correct: "pièces", choices: ["pièces", "images", "marques"] },
+          { correct: "démontage", choices: ["démontage", "vol", "lavage"] }
+        ],
+        explanation: "L'Indice de Réparabilité (sur 10) incite à réparer plutôt qu'à jeter prématurément."
+      },
+      { id: 5, type: "qcm", question: "Quelle est la fonction d'usage principale d'une montre connectée ?", options: ["Remplacer un four à micro-ondes", "Mesurer le temps et apporter des fonctions numériques d'assistance", "Servir d'outil de maçonnerie", "Remplacer un vélo"], answer: 1, explanation: "Sa fonction première reste la donne de l'heure, enrichie de capteurs et notifications." },
+      { id: 6, type: "vf", question: "Vrai ou Faux : L'ampoule LED fonctionne grâce à un filament chauffé à très haute température.", options: ["Vrai", "Faux"], answer: 1, explanation: "FAUX ! La LED utilise l'électroluminescence de puces semi-conductrices sans aucun filament à chauffer." },
+      { id: 7, type: "qcm", question: "Qu'est-ce qu'un 'principe technique' ?", options: ["Le prix de vente en magasin", "La solution scientifique ou mécanique retenue pour assurer une fonction", "Le nom de la marque commerciale", "Le pays où l'objet est vendu"], answer: 1, explanation: "C'est la solution physique ou technologique qui réalise la fonction d'usage." },
+      {
+        id: 8,
+        type: "appariement",
+        question: "Mise en correspondance : Relie chaque moyen de transport urbain à son principe d'énergie principal.",
+        pairs: [
+          { left: "Vélo classique", right: "Énergie musculaire de l'utilisateur" },
+          { left: "Bus hybride", right: "Association moteur thermique et batterie électrique" },
+          { left: "Tramway", right: "Énergie électrique distribuée par caténaire" }
+        ],
+        explanation: "Les véhicules urbains se différencient par la nature de l'énergie et la façon dont elle est transmise."
+      },
+      { id: 9, type: "vf", question: "Vrai ou Faux : Le téléphone à cadran rotatif et le smartphone récent répondent au même besoin fondamental de communiquer à distance.", options: ["Vrai", "Faux"], answer: 0, explanation: "VRAI ! Le besoin de base reste identique, seuls les moyens techniques et les services ajoutés diffèrent." },
+      { id: 10, type: "qcm", question: "Qu'appelle-t-on l'obsolescence programmée ?", options: ["Un programme d'entraînement sportif", "La réduction volontaire de la durée de vie d'un produit pour pousser à son rachat", "Le fait de réparer un objet gratuitement", "Une mise à jour de sécurité"], answer: 1, explanation: "C'est une pratique commerciale et industrielle déloyale visant à accélérer le renouvellement des biens." },
+      {
+        id: 11,
+        type: "cloze",
+        question: "Texte à trous : Complète la définition de l'Analyse du Cycle de Vie.",
+        text: "L'ACV prend en compte **[0]** les étapes de la vie de l'objet, depuis l'extraction des **[1]** jusqu'à son **[2]** final ou sa valorisation.",
+        blanks: [
+          { correct: "toutes", choices: ["toutes", "seules", "deux"] },
+          { correct: "matières premières", choices: ["matières premières", "logiciels", "factures"] },
+          { correct: "recyclage", choices: ["recyclage", "virement", "brevet"] }
+        ],
+        explanation: "L'ACV est une approche globale 'du berceau au tombeau'."
+      },
+      { id: 12, type: "qcm", question: "Quel est l'avantage majeur des plastiques biosourcés ?", options: ["Ils ne fondent jamais", "Ils sont fabriqués à partir de matières végétales renouvelables (ex: maïs, lin) au lieu du pétrole", "Ils sont entièrement invisibles à l'œil nu", "Ils sont gratuits"], answer: 1, explanation: "Les biomatériaux préservent les ressources fossiles (pétrole) et réduisent les émissions de gaz à effet de serre." },
+      {
+        id: 13,
+        type: "visuel",
+        question: "Consulte le tableau comparatif d'emballages ci-dessous : Quel matériau présente le meilleur bilan de recyclabilité ?",
+        context: {
+          badge: "📊 ÉTUDE ÉCO-MATÉRIAUX EMBALLAGE",
+          title: "Analyse d'impact fin de vie",
+          content: `<div class="p-3 bg-slate-900 text-white rounded-xl text-xs space-y-1"><p>• Verre : Recyclable à 100% à l'infini</p><p>• Aluminium : Recyclable à 100% à l'infini avec économie de 95% d'énergie</p><p>• Plastique complexe multimatière : Difficilement recyclable (enfouissement ou incinération)</p></div>`
+        },
+        options: [
+          "Le plastique complexe multimatière",
+          "Le verre et l'aluminium car ils sont recyclables à 100% à l'infini",
+          "Aucun des trois n'est recyclable",
+          "Le polystyrène expansionné"
+        ],
+        answer: 1,
+        explanation: "Le verre et l'aluminium se recyclent indéfiniment sans perte de qualité de matière."
+      },
+      { id: 14, type: "vf", question: "Vrai ou Faux : Un brevet protège une invention pendant une durée maximale de 20 ans en France.", options: ["Vrai", "Faux"], answer: 0, explanation: "VRAI ! La protection par brevet est limitée dans le temps (généralement 20 ans) avant de tomber dans le domaine public." },
+      { id: 15, type: "qcm", question: "Lors d'une veille technologique, quelle source présente la plus haute fiabilité ?", options: ["Les bases de brevets et revues scientifiques à comité de lecture", "Une rumeur sur un réseau social", "Un commentaire anonyme sur un forum", "Une publicité commerciale"], answer: 0, explanation: "Les publications évaluées par des pairs et les titres de propriété industrielle garantissent la véracité de l'information." },
+      {
+        id: 16,
+        type: "ordonnancement",
+        question: "Mise en séquence : Ordonne les étapes d'évolution de l'enregistrement sonore.",
+        items: [
+          "1. Phonographe à cylindre mécanique",
+          "2. Disque vinyle microsillon analogique",
+          "3. Cassette audio à bande magnétique",
+          "4. Disque Compact (CD) numérique puis streaming dématérialisé"
+        ],
+        explanation: "Le son est passé de la gravure mécanique à l'analogique magnétique puis au codage numérique binaire."
+      },
+      { id: 17, type: "vf", question: "Vrai ou Faux : Un objet connecté échange des données sans fil via des réseaux (Wi-Fi, Bluetooth, 4G/5G).", options: ["Vrai", "Faux"], answer: 0, explanation: "VRAI ! La connectivité permet la commande à distance et la collecte de données d'usage." },
+      { id: 18, type: "qcm", question: "Quelle innovation a révolutionné la mobilité urbaine individuelle au XXIe siècle ?", options: ["La trottinette électrique et le vélo à assistance électrique", "Le fiacre à deux chevaux", "La locomotive à vapeur", "Le patin à roulettes en bois"], answer: 0, explanation: "L'assistance électrique et le stockage lithium ont permis l'essor des micro-mobilités urbaines." },
+      { id: 19, type: "qcm", question: "Que signifie la 'recyclabilité' d'un matériau ?", options: ["Sa capacité à être retraité pour fabriquer de nouveaux produits", "Son prix d'achat d'occasion", "Sa couleur après séchage", "Le poids de son emballage"], answer: 0, explanation: "Un matériau recyclable réintègre le cycle de fabrication après traitement." },
+      { id: 20, type: "vf", question: "Vrai ou Faux : Miniaturiser les composants électroniques permet d'intégrer plus de fonctionnalités dans un espace restreint.", options: ["Vrai", "Faux"], answer: 0, explanation: "VRAI ! La gravure nanométrique des processeurs est le moteur de la miniaturisation des smartphones." },
+      {
+        id: 21,
+        type: "appariement",
+        question: "Mise en correspondance : Associe chaque outil de chauffage au combustible/énergie utilisé.",
+        pairs: [
+          { left: "Poêle à granulés", right: "Biomasse bois (pellets)" },
+          { left: "Radiateur à inertie", right: "Électricité" },
+          { left: "Chauffage solaire thermique", right: "Rayonnement du Soleil via capteurs vitrés" }
+        ],
+        explanation: "Chaque système de chauffage adapte son principe technique à la source d'énergie disponible."
+      },
+      { id: 22, type: "qcm", question: "Quel composant électronique a remplacé les tubes à vide pour miniaturiser les ordinateurs ?", options: ["Le transistor à semi-conducteur", "La bougie d'allumage", "La pile à combustible géante", "Le fil d'acier tressé"], answer: 0, explanation: "Inventé en 1947, le transistor a permis la naissance de la micro-informatique moderne." },
+      { id: 23, type: "vf", question: "Vrai ou Faux : Consulter les avis des utilisateurs sur des forums permet de déceler des défauts d'ergonomie lors d'une veille.", options: ["Vrai", "Faux"], answer: 0, explanation: "VRAI ! La veille sur l'expérience utilisateur (retours clients) permet de repérer les besoins non satisfaits." },
+      {
+        id: 24,
+        type: "cloze",
+        question: "Texte à trous : Complète la phrase sur l'ergonomie.",
+        text: "L'**[0]** étudie l'adaptation des objets aux capacités physiques et mentales de l'**[1]** pour assurer confort et **[2]** lors de l'utilisation.",
+        blanks: [
+          { correct: "ergonomie", choices: ["ergonomie", "chimie", "géographie"] },
+          { correct: "utilisateur", choices: ["utilisateur", "robot", "vendeur"] },
+          { correct: "sécurité", choices: ["sécurité", "vitesse", "chaleur"] }
+        ],
+        explanation: "Un objet ergonomique est facile à prendre en main et évite la fatigue ou les blessures."
+      },
+      { id: 25, type: "qcm", question: "À quoi correspond le 'mode veille' d'un téléviseur d'un point de vue énergétique ?", options: ["À une consommation d'énergie inutile à supprimer (consommation cachée)", "À un mode qui produit de l'électricité", "À la batterie du téléphone", "À une extinction totale à 100%"], answer: 0, explanation: "La veille passive consomme du courant en continu sans apporter de service utile." },
+      { id: 26, type: "vf", question: "Vrai ou Faux : L'éco-conception augmente toujours obligatoirement le prix final d'un produit de 500%.", options: ["Vrai", "Faux"], answer: 1, explanation: "FAUX ! L'éco-conception peut réduire les coûts en économisant de la matière et de l'énergie de fabrication." },
+      { id: 27, type: "qcm", question: "Parmi ces matériaux, lequel est d'origine fossile non renouvelable ?", options: ["Le plastique polypropylène issu du pétrole", "Le bois de forêt gérée durablement", "Le coton biologique", "Le bambou"], answer: 0, explanation: "Le pétrole est une ressource fossile qui a mis des millions d'années à se former." },
+      {
+        id: 28,
+        type: "visuel",
+        question: "Observe la charte graphique de sobriété numérique : Quel geste réduit le plus l'empreinte carbone lors du visionnage de vidéos ?",
+        context: {
+          badge: "📱 GUIDE SOBRIÉTÉ NUMÉRIQUE",
+          title: "Impact environnemental du streaming vidéo",
+          content: `<div class="p-3 bg-emerald-50 border border-emerald-300 rounded-xl text-xs text-emerald-950 space-y-1"><p>• Visionner en Wi-Fi plutôt qu'en 4G/5G (3x à 6x moins d'énergie consommée)</p><p>• Adapter la résolution à l'écran (ex: HD sur smartphone au lieu de 4K inutile)</p><p>• Éteindre la télévision quand personne ne regarde</p></div>`
+        },
+        options: [
+          "Préférer le réseau Wi-Fi local à la 4G/5G et adapter la résolution à la taille de l'écran",
+          "Mettre le volume au maximum",
+          "Changer de smartphone tous les 3 mois",
+          "Laisser la vidéo tourner toute la nuit"
+        ],
+        answer: 0,
+        explanation: "Le Wi-Fi consomme beaucoup moins d'énergie par gigaoctet transféré que les antennes relais cellulaires."
+      },
+      { id: 29, type: "vf", question: "Vrai ou Faux : Un cahier des charges exprime les besoins sous forme de fonctions et de contraintes à respecter.", options: ["Vrai", "Faux"], answer: 0, explanation: "VRAI ! Il formalise les exigences de l'acheteur ou de l'utilisateur." },
+      { id: 30, type: "qcm", question: "Quelle est la principale source d'énergie d'une voiture à pile à combustible hydrogène ?", options: ["Le gaz dihydrogène (H2)", "Le charbon de bois", "L'huile de tournesol", "L'énergie nucléaire directe"], answer: 0, explanation: "La pile à combustible fait réagir l'hydrogène avec l'oxygène de l'air pour produire de l'électricité et de l'eau." },
+      {
+        id: 31,
+        type: "ordonnancement",
+        question: "Mise en séquence : Remets dans l'ordre les phases de conception d'un nouvel objet technique.",
+        items: [
+          "1. Analyse des besoins et rédaction du Cahier des Charges",
+          "2. Veille technologique et recherche de solutions techniques",
+          "3. Modélisation 3D et réalisation d'un prototype",
+          "4. Validation des tests et lancement de la fabrication en série"
+        ],
+        explanation: "On part du besoin, on étudie les solutions (veille), on prototype puis on fabrique."
+      },
+      { id: 32, type: "vf", question: "Vrai ou Faux : Déposer un brevet rend l'invention publique tout en interdisant sa copie commerciale.", options: ["Vrai", "Faux"], answer: 0, explanation: "VRAI ! C'est le principe du brevet : diffuser la connaissance technique en échange d'un monopole d'exploitation." },
+      { id: 33, type: "qcm", question: "Que permet la modélisation 3D sur ordinateur (CAO) avant de fabriquer un produit ?", options: ["De tester virtuellement la résistance et corriger les erreurs sans gaspiller de matière", "De rendre le produit immédiatement gratuit", "De remplacer complètement les ouvriers dans le monde", "D'annuler la gravité"], answer: 0, explanation: "La CAO permet de simuler le comportement de l'objet et d'optimiser les formes avant le prototypage réel." },
+      {
+        id: 34,
+        type: "appariement",
+        question: "Mise en correspondance : Associe chaque type de capteur de smartphone à son rôle.",
+        pairs: [
+          { left: "Accéléromètre / Gyroscope", right: "Détecter l'orientation et les mouvements de l'appareil" },
+          { left: "Capteur de luminosité", right: "Ajuster automatiquement l'éclairage de l'écran" },
+          { left: "Capteur d'empreinte digitale", right: "Sécuriser le déverrouillage biométrique" }
+        ],
+        explanation: "Les capteurs permettent à l'appareil d'interagir intelligemment avec son environnement."
+      },
+      { id: 35, type: "qcm", question: "Pourquoi la LED a-t-elle progressivement remplacé le tube fluorescent (néon) ?", options: ["Car la LED ne contient pas de mercure toxique et s'allume instantanément sans clignoter", "Parce que la LED est fabriquée en papier", "Parce que le néon est plus lourd qu'une voiture", "Par pure mode visuelle"], answer: 0, explanation: "La LED est plus sûre pour la santé (sans mercure), s'allume instantanément et consomme encore moins." },
+      { id: 36, type: "vf", question: "Vrai ou Faux : L'Intelligence Artificielle intégrée aux processeurs de smartphones permet d'optimiser l'autonomie de la batterie.", options: ["Vrai", "Faux"], answer: 0, explanation: "VRAI ! L'IA apprend des habitudes de l'utilisateur pour couper les applications énergivores en arrière-plan." },
+      { id: 37, type: "qcm", question: "Qu'est-ce que la fabrication additive ?", options: ["L'impression 3D par ajout de matière couche par couche", "Le découpage d'un bloc de pierre au marteau", "Le moulage sous pression de plastique", "Le tressage de fils de laine"], answer: 0, explanation: "La fabrication additive dépose la matière uniquement là où elle est nécessaire (ex: impression 3D FDM ou SLA)." },
+      { id: 38, type: "vf", question: "Vrai ou Faux : Un produit qui possède un indice de réparabilité de 2/10 est très facile à démonter et à réparer soi-même.", options: ["Vrai", "Faux"], answer: 1, explanation: "FAUX ! Un indice de 2/10 indique un produit collé, difficilement démontable ou sans pièces détachées disponibles." },
+      {
+        id: 39,
+        type: "cloze",
+        question: "Texte à trous : Complète la conclusion sur la démarche de projet.",
+        text: "Pour réussir un projet technique, l'ingénieur doit équilibrer les contraintes **[0]** (budget, matériaux), **[1]** (normes de sécurité, lois) et **[2]** (émissions, recyclage).",
+        blanks: [
+          { correct: "économiques", choices: ["économiques", "musicales", "magiques"] },
+          { correct: "juridiques", choices: ["juridiques", "sportives", "secrètes"] },
+          { correct: "environnementales", choices: ["environnementales", "spatiales", "imaginaires"] }
+        ],
+        explanation: "La conception technique est un arbitrage permanent entre contraintes financières, réglementaires et écologiques."
+      },
+      { id: 40, type: "qcm", question: "En conclusion, quelle est la responsabilité de l'élève/futur citoyen face aux évolutions technologiques ?", options: ["Utiliser et acheter sans réfléchir", "Développer un esprit critique, pratiquer la sobriété numérique et favoriser l'éco-conception", "Interdire toutes les machines dans le monde", "Refuser d'utiliser l'électricité"], answer: 1, explanation: "Comprendre la technologie permet d'adopter des usages éclairés, responsables et éco-citoyens !" }
     ];
 
     // Phone Era Interactive Data
@@ -1024,6 +1215,157 @@
       renderTrainingQuestions();
     }
 
+    /* ==========================================================================
+       5. UNIVERSAL QUESTION RENDERING ENGINE (QCM, VF, APPARIEMENT, ORDONNANCEMENT, VISUEL, CLOZE)
+       ========================================================================== */
+    function renderQuestionContent(q, isAnswered, userAns, sectionPrefix = "train") {
+      let html = "";
+      
+      // 1. VISUAL CONTEXT
+      if (q.context) {
+        html += `
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 mb-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-indigo-100 text-indigo-700">${q.context.badge || 'DOCUMENT SUPPORT'}</span>
+              <span class="text-xs text-slate-500 font-bold">${q.context.title || ''}</span>
+            </div>
+            <div>${q.context.content}</div>
+          </div>
+        `;
+      }
+
+      // 2. APPARIEMENT (MATCHING)
+      if (q.type === 'appariement' && q.pairs) {
+        html += `<div class="space-y-2.5 mb-4">`;
+        q.pairs.forEach((p) => {
+          html += `
+            <div class="p-3 bg-indigo-50/50 rounded-xl border border-indigo-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs sm:text-sm">
+              <span class="font-bold text-indigo-900">${p.left}</span>
+              <span class="text-slate-400">➔</span>
+              <span class="font-medium text-slate-800 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm">${p.right}</span>
+            </div>
+          `;
+        });
+        html += `</div>`;
+        
+        if (!q.options) {
+          q.options = [
+            "Cette mise en correspondance est exacte",
+            "Cette correspondance comporte une erreur"
+          ];
+          q.answer = 0;
+        }
+      }
+
+      // 3. ORDONNANCEMENT (SEQUENCING)
+      if (q.type === 'ordonnancement' && q.items) {
+        html += `<div class="space-y-2 mb-4 bg-amber-50/50 p-4 rounded-2xl border border-amber-200/60">`;
+        html += `<span class="text-xs font-bold text-amber-800 uppercase tracking-wider block mb-1">📋 Ordre chronologique / logique :</span>`;
+        q.items.forEach((item, itemIdx) => {
+          html += `
+            <div class="p-2.5 bg-white rounded-xl border border-amber-200 text-xs sm:text-sm font-semibold text-slate-800 flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center text-xs font-bold">${itemIdx + 1}</span>
+              <span>${item.replace(/^\d+\.\s*/, '')}</span>
+            </div>
+          `;
+        });
+        html += `</div>`;
+
+        if (!q.options) {
+          q.options = [
+            "Cette séquence chronologique est correcte",
+            "Cette séquence est incorrecte"
+          ];
+          q.answer = 0;
+        }
+      }
+
+      // 4. CLOZE TEST (TEXTE À TROUS)
+      if (q.type === 'cloze' && q.blanks) {
+        let formattedText = q.text;
+        q.blanks.forEach((b, bIdx) => {
+          let replacement = `<strong class="text-indigo-600 underline decoration-indigo-300 decoration-2">[${b.correct}]</strong>`;
+          formattedText = formattedText.replace(`**[${bIdx}]**`, replacement).replace(`[${bIdx}]`, replacement);
+        });
+
+        html += `
+          <div class="p-4 rounded-2xl bg-indigo-50/70 border border-indigo-200 text-sm sm:text-base text-slate-800 leading-relaxed mb-4 space-y-2">
+            <span class="text-xs font-bold text-indigo-800 uppercase tracking-wider block">✏️ Texte complété :</span>
+            <p>${formattedText}</p>
+          </div>
+        `;
+
+        if (!q.options) {
+          q.options = [
+            "Tous les mots insérés dans les trous sont exacts",
+            "Il y a une erreur dans le texte proposé"
+          ];
+          q.answer = 0;
+        }
+      }
+
+      // 5. OPTIONS SELECTION (QCM, VF, OR VALIDATION BUTTONS)
+      if (q.options && q.options.length > 0) {
+        html += `<div class="space-y-2.5">`;
+        q.options.forEach((opt, optIdx) => {
+          let btnStyle = "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-800";
+          let badge = "";
+
+          if (isAnswered) {
+            if (optIdx === q.answer) {
+              btnStyle = "bg-emerald-100 border-emerald-400 text-emerald-900 font-bold";
+              badge = "✔ Bonne réponse";
+            } else if (optIdx === userAns && userAns !== q.answer) {
+              btnStyle = "bg-red-100 border-red-400 text-red-900 font-bold";
+              badge = "✘ Faux";
+            } else {
+              btnStyle = "bg-slate-50 border-slate-200 text-slate-400 opacity-60 cursor-not-allowed";
+            }
+          }
+
+          const onClickCall = sectionPrefix === 'train' 
+            ? `submitTrainingAnswer(${q.id}, ${optIdx})` 
+            : `recordEvalAnswerAndNext(${optIdx})`;
+
+          html += `
+            <button 
+              ${isAnswered ? 'disabled' : ''} 
+              onclick="${onClickCall}" 
+              class="w-full text-left p-4 rounded-2xl border-2 transition flex items-center justify-between text-sm sm:text-base font-medium ${btnStyle}"
+            >
+              <span>${opt}</span>
+              ${badge ? `<span class="text-xs px-2 py-1 rounded-lg ${optIdx === q.answer ? 'bg-emerald-600 text-white' : 'bg-red-600 text-white'}">${badge}</span>` : ''}
+            </button>
+          `;
+        });
+        html += `</div>`;
+      }
+
+      return html;
+    }
+
+    /* ==========================================================================
+       6. TRAINING QUIZ ENGINE (20 QUESTIONS)
+       ========================================================================== */
+    function initTrainingSection() {
+      // Start global timer if not started
+      if (!trainTimerInterval) {
+        trainTimerInterval = setInterval(() => {
+          trainSecondsLeft--;
+          if (trainSecondsLeft <= 0) {
+            clearInterval(trainTimerInterval);
+            trainSecondsLeft = 0;
+            alert("⏰ Le temps imparti pour l'entraînement est écoulé !");
+          }
+          const mins = Math.floor(trainSecondsLeft / 60);
+          const secs = trainSecondsLeft % 60;
+          document.getElementById('id-train-timer').textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }, 1000);
+      }
+
+      renderTrainingQuestions();
+    }
+
     function renderTrainingQuestions() {
       const container = document.getElementById('id-train-questions-container');
       container.innerHTML = "";
@@ -1036,34 +1378,14 @@
         const isAnswered = trainAnswers.hasOwnProperty(q.id);
         const selectedOpt = trainAnswers[q.id];
 
-        let choicesHTML = "";
-        q.options.forEach((opt, optIdx) => {
-          let btnStyle = "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-800";
-          let badge = "";
+        let typeLabel = "QCM";
+        if (q.type === 'vf') typeLabel = "Vrai / Faux";
+        else if (q.type === 'appariement') typeLabel = "Appariement";
+        else if (q.type === 'ordonnancement') typeLabel = "Ordonnancement";
+        else if (q.type === 'visuel') typeLabel = "Support Visuel";
+        else if (q.type === 'cloze') typeLabel = "Texte à Trous";
 
-          if (isAnswered) {
-            if (optIdx === q.answer) {
-              btnStyle = "bg-emerald-100 border-emerald-400 text-emerald-900 font-bold";
-              badge = "✔ Bonne réponse";
-            } else if (optIdx === selectedOpt && selectedOpt !== q.answer) {
-              btnStyle = "bg-red-100 border-red-400 text-red-900 font-bold";
-              badge = "✘ Faux";
-            } else {
-              btnStyle = "bg-slate-50 border-slate-200 text-slate-400 opacity-60 cursor-not-allowed";
-            }
-          }
-
-          choicesHTML += `
-            <button 
-              ${isAnswered ? 'disabled' : ''} 
-              onclick="submitTrainingAnswer(${q.id}, ${optIdx})" 
-              class="w-full text-left p-4 rounded-2xl border-2 transition flex items-center justify-between text-sm sm:text-base font-medium ${btnStyle}"
-            >
-              <span>${opt}</span>
-              ${badge ? `<span class="text-xs px-2 py-1 rounded-lg ${optIdx === q.answer ? 'bg-emerald-600 text-white' : 'bg-red-600 text-white'}">${badge}</span>` : ''}
-            </button>
-          `;
-        });
+        let contentHTML = renderQuestionContent(q, isAnswered, selectedOpt, "train");
 
         let feedbackHTML = "";
         if (isAnswered) {
@@ -1081,12 +1403,10 @@
         card.innerHTML = `
           <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-3">
             <span class="text-xs font-extrabold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">Question ${idx + 1} / 20</span>
-            <span class="text-xs text-slate-400 font-semibold">${q.type === 'vf' ? 'Vrai / Faux' : 'QCM'}</span>
+            <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full">${typeLabel}</span>
           </div>
-          <h4 class="text-base sm:text-lg font-bold text-slate-900">${q.question}</h4>
-          <div class="space-y-2.5 pt-2">
-            ${choicesHTML}
-          </div>
+          <h4 class="text-base sm:text-lg font-bold text-slate-900 mb-2">${q.question}</h4>
+          ${contentHTML}
           ${feedbackHTML}
         `;
 
@@ -1187,7 +1507,7 @@
     }
 
     /* ==========================================================================
-       6. EVALUATION ENGINE (40 QUESTIONS - STRICT 45s TIMER)
+       7. EVALUATION ENGINE (40 QUESTIONS - STRICT 45s TIMER)
        ========================================================================== */
     function startEvaluation(e) {
       e.preventDefault();
@@ -1245,24 +1565,22 @@
       // Render Question Content
       const card = document.getElementById('id-eval-question-card');
       
-      let optionsHTML = "";
-      q.options.forEach((opt, optIdx) => {
-        optionsHTML += `
-          <button 
-            onclick="recordEvalAnswerAndNext(${optIdx})" 
-            class="w-full text-left p-4 rounded-2xl border-2 border-slate-200 hover:border-amber-500 hover:bg-amber-50 transition font-medium text-slate-800 text-sm sm:text-base flex items-center justify-between"
-          >
-            <span>${opt}</span>
-            <span class="text-xs text-amber-600 font-bold border border-amber-300 px-2 py-0.5 rounded-md bg-white">Valider →</span>
-          </button>
-        `;
-      });
+      let typeLabel = "QCM";
+      if (q.type === 'vf') typeLabel = "Vrai / Faux";
+      else if (q.type === 'appariement') typeLabel = "Mise en correspondance";
+      else if (q.type === 'ordonnancement') typeLabel = "Mise en séquence";
+      else if (q.type === 'visuel') typeLabel = "Support Visuel / Contextuel";
+      else if (q.type === 'cloze') typeLabel = "Texte à Trous (Cloze)";
+
+      let contentHTML = renderQuestionContent(q, false, null, "eval");
 
       card.innerHTML = `
-        <h4 class="text-lg sm:text-xl font-bold text-slate-900 leading-snug">${q.question}</h4>
-        <div class="space-y-3 pt-2">
-          ${optionsHTML}
+        <div class="flex items-center justify-between border-b border-slate-100 pb-2 mb-3">
+          <span class="text-xs font-extrabold uppercase tracking-wider text-amber-600 bg-amber-50 px-3 py-1 rounded-full">Évaluation Officielle</span>
+          <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full">${typeLabel}</span>
         </div>
+        <h4 class="text-lg sm:text-xl font-bold text-slate-900 leading-snug mb-3">${q.question}</h4>
+        ${contentHTML}
       `;
     }
 
@@ -1296,8 +1614,8 @@
           mistakes.push({
             qNumber: idx + 1,
             question: q.question,
-            userAnsText: userAns !== null ? q.options[userAns] : "Non répondu (Temps écoulé)",
-            correctAnsText: q.options[q.answer]
+            userAnsText: userAns !== null && q.options && q.options[userAns] ? q.options[userAns] : "Non répondu (Temps écoulé)",
+            correctAnsText: q.options && q.options[q.answer] ? q.options[q.answer] : "Réponse valide"
           });
         }
       });
